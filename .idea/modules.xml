@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://E:\elftree\elftree_app\app.iml" filepath="E:\elftree\elftree_app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elftree.iml" filepath="$PROJECT_DIR$/elftree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elftree_app/elftree_app.iml" filepath="$PROJECT_DIR$/elftree_app/elftree_app.iml" />
+    </modules>
+  </component>
+</project>
