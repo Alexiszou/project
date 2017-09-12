@@ -22,6 +22,17 @@ import com.elftree.mall.utils.TimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orhanobut.logger.Logger;
+import com.zhz.retrofitclient.RetrofitClient;
+import com.zhz.retrofitclient.exception.ExceptionHandle;
+import com.zhz.retrofitclient.exception.ResponeException;
+import com.zhz.retrofitclient.exception.SuccessWithoutDataException;
+import com.zhz.retrofitclient.net.BaseResponse;
+import com.zhz.retrofitclient.net.BaseSubscriber;
+import com.zhz.retrofitclient.utils.LogUtil;
+import com.zhz.retrofitclient.utils.ToastUtil;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -36,7 +47,9 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 import okhttp3.RequestBody;
+
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDatas(){
-
+        RetrofitClient.getInstance();
     }
 
 
@@ -87,30 +100,21 @@ public class MainActivity extends AppCompatActivity {
         User user = new User();
         user.setMobile(phoneNumber);
         //Logger.d("user.genRequestBody:"+user.genRequestBody(user));
-        Observable<Object> observable = service.post(url,user.genRequestBody());
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Object>() {
+        RetrofitClient.getInstance().createBaseApi()
+                .json(url,user.genRequestBody())
+                .subscribe(new BaseSubscriber<BaseResponse>(this) {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onError(ResponeException e) {
+                        Logger.e(e.getStrCode());
+                        ToastUtil.showShortToast(MainActivity.this,e.getMessage());
 
                     }
 
                     @Override
-                    public void onNext(Object s) {
-                        Logger.d("onNext:"+s.toString());
-                        textView.setText(s.toString());
+                    public void onNext(BaseResponse userBaseResponse) {
+                        Logger.d("onNext:"+userBaseResponse.toString());
                     }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Logger.e("e:"+e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Logger.d("onComplete!!!!!!!!!!!");
-                    }
                 });
     }
 }

@@ -9,6 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/elftree_app" />
+            <option value="$PROJECT_DIR$/log" />
+            <option value="$PROJECT_DIR$/retrofitClient" />
+            <option value="$PROJECT_DIR$/retrofitClientLib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

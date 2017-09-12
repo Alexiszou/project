@@ -1,1 +1,1 @@
-include ':elftree_app'
+include ':elftree_app', ':log', ':retrofitClient', ':retrofitClientLib'
