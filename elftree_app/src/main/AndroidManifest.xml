@@ -6,16 +6,46 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".MyApplication">
-        <activity android:name=".MainActivity">
+        android:name=".activity.MyApplication"
+
+        >
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.SplashAcitvity"
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity android:name=".activity.RegisterAndForgetPwdActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity android:name=".activity.CategoryActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity android:name=".activity.GoodsInfoActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity android:name=".activity.PhotoDraweeViewActivity"
+            android:screenOrientation="portrait" >
+
         </activity>
         <receiver
             android:name=".receiver.JPushReceiver"

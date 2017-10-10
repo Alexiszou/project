@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.zhz.retrofitclient.exception.ApiServiceNullException;
 import com.zhz.retrofitclient.exception.CreateHttpCacheException;
@@ -24,6 +25,7 @@ import com.zhz.retrofitclient.utils.LogUtil;
 import org.reactivestreams.Publisher;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -87,6 +89,14 @@ public class RetrofitClient {
         return SingletonHolder.INSTANCE;
     }
 
+    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+        @Override
+        public void log(String message) {
+            //打印retrofit日志
+            LogUtil.logd(RetrofitClient.TAG,"retrofitBack = "+message);
+        }
+    }).setLevel(HttpLoggingInterceptor.Level.BODY);
+
     private RetrofitClient() throws UninitException , CreateHttpCacheException{
         if(mContext == null){
             //没有初始化init
@@ -103,10 +113,8 @@ public class RetrofitClient {
         }catch (Exception e){
             throw new CreateHttpCacheException(e);
         }
-
         mOkHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(
-                        new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addInterceptor(loggingInterceptor)
                 //.cookieJar(new NovateCookieManger(context))
                 .cache(httpCache)
                 .addInterceptor(new HeadersInterceptor(httpHeaders))
@@ -177,7 +185,8 @@ public class RetrofitClient {
         return new FlowableTransformer() {
             @Override
             public Publisher apply(@NonNull Flowable upstream) {
-                return upstream.map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
+                //return upstream.map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
+                return upstream.onErrorResumeNext(new HttpResponseFunc<>());
             }
 
            /* @Override
@@ -199,12 +208,20 @@ public class RetrofitClient {
 
         @Override
         public T apply(@NonNull BaseResponse<T> response) throws Exception {
-            if (!response.isOk() || response.getData() == null) {
+            //LogUtil.logd(RetrofitClient.TAG,response.toString());
+            if (!response.isOk() ) {
                 //throw new RequestException(response.getCode(),response.getMsg());
                 throw new ResponeException(response.getCode(),response.getMsg());
             } else if(response.getData() == null){
+                //response.setData("");
+               // return new Object();
+                return null;
                 //throw new SuccessWithoutDataException(RequestException.RequestError.getInstance(response.getCode()));
             }
+            //LogUtil.logd(RetrofitClient.TAG,response.getData().getClass().getName()+"!!!!!!");
+           // LogUtil.logd(RetrofitClient.TAG,response.getData().toString()+"!!!!!!");
+            //Type type = new TypeToken<T>(){}.getType();
+            //Gson gson = new Gson();
             return response.getData();
         }
     }

@@ -1,11 +1,117 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:colorControlNormal">@color/colorAccent</item>-->
+        <item name="colorControlHighlight">@color/rippleColor</item>
+
+        <!--<item name="android:windowLightStatusBar">true</item>-->
+        <!--<item name="android:textAppearance">@style/TextStyle</item>-->
+        <item name="android:buttonStyle">@style/MyButtonStyle</item>
+        <item name="android:imageButtonStyle">@style/MyImageButtonStyle</item>
+        <item name="imageButtonStyle">@style/MyImageButtonStyle</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="editTextStyle">@style/MyEditTextStyle</item>
+        <item name="android:textViewStyle">@style/MyTextViewStyle</item>
+
+        <item name="vpiLinePageIndicatorStyle">@style/LineIndicatorStyle</item>
+
+
+
     </style>
 
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+
+    </style>
+
+    <style name="MyTextViewStyle" >
+        <!--<item name="android:background">?android:attr/selectableItemBackground</item>-->
+    </style>
+    <style name="TextStyle" parent="@android:style/TextAppearance">
+        <item name="android:textSize">200sp</item>
+        <item name="android:textColor">#FF0000</item>
+    </style>
+    
+    <style name="MyButtonStyle" parent="Widget.AppCompat.Button">
+        <!--<item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>-->
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="MyImageButtonStyle" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+
+    </style>
+    
+    <style name="MyEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">@dimen/normalTextSize</item>
+        <item name="android:singleLine">true</item>
+
+    </style>
+
+    <style name="MyButtonStyle.CircleCornerButtonStyle" >
+        <item name="android:background">@drawable/btn_green_ripple</item>
+        <item name="android:textSize">@dimen/largeTextSize</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">@dimen/buttonc_circle_corner_layout_width</item>
+        <item name="android:layout_height">@dimen/button_circle_corner_layout_height</item>
+    </style>
+    
+    <style name="MainTabLayoutStyle">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+        <item name="tabTextAppearance">@style/MyMainTabTextAppearance</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabPadding">0dp</item>
+    </style>
+    <style name="MyMainTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10dp</item>
+        <item name="android:textColor">@color/grayPrimary</item>
+    </style>
+
+
+    <style name="MallFragmentTabLayoutStyle">
+        <!--<item name="tabIndicatorHeight">1dp</item>-->
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+        <item name="tabTextAppearance">@style/MallFragmentTabTextAppearance</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabPadding">0dp</item>
+    </style>
+    <style name="MallFragmentTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">@color/graySecondary</item>
+    </style>
+
+    <style name="UltraViewPagerStyle">
+        <!--<item name="upv_scrollmode">horizontal</item>
+        <item name="rvp_triggerOffset">0.05</item>
+        <item name="rvp_singlePageFling">true</item>-->
+    </style>
+    <style name="RecyclerViewPagerStyle">
+        <!--<item name="upv_scrollmode">horizontal</item>
+        <item name="rvp_triggerOffset">0.05</item>
+        <item name="rvp_singlePageFling">true</item>-->
+    </style>
+    <style name="LineIndicatorStyle" >
+        <!--<item name="centered">true</item>
+        <item name="gapWidth">@dimen/line_indicator_gap_width</item>
+        <item name="strokeWidth">@dimen/line_indicator_stroke_width</item>
+        <item name="lineWidth">@dimen/line_indicator_line_width</item>
+        <item name="selectedColor">@color/line_indicator_selected_color</item>
+        <item name="unselectedColor">@color/line_indicator_unselected_color</item>-->
+    </style>
+
+    <style name="DraweeViewStyle">
+        <item name="placeholderImage">@drawable/null_image</item>
+        <item name="actualImageScaleType">fitCenter</item>
+    </style>
 </resources>

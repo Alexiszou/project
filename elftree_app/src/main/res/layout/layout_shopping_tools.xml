@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.elftree.mall.activity.GoodsInfoActivity">
+    <data>
+        <variable
+            name="title"
+            type="String"/>
+    </data>
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="47dp"
+        >
+        <Button
+            android:id="@+id/btn_service"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/ic_tools_service"
+            android:textSize="@dimen/miniTextSize"
+            android:textColor="@color/grayPrimary"
+            android:text="@string/service"
+
+            android:minHeight="0dp"
+            android:minWidth="0dp"/>
+        <include layout="@layout/layout_vertical_interval_line"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            />
+        <Button
+            android:id="@+id/btn_collection"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/ic_tools_collection"
+            android:textSize="@dimen/miniTextSize"
+            android:textColor="@color/grayPrimary"
+            android:text="@string/collection"
+
+            android:minHeight="0dp"
+            android:minWidth="0dp"/>
+        <include layout="@layout/layout_vertical_interval_line"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            />
+        <Button
+        android:id="@+id/btn_shopping_cart"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:drawableTop="@drawable/ic_tools_shopping"
+        android:textSize="@dimen/miniTextSize"
+        android:textColor="@color/grayPrimary"
+        android:text="@string/shopping_cart"
+
+            android:minHeight="0dp"
+            android:minWidth="0dp"/>
+        <Button
+            android:id="@+id/btn_buy_now"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="@string/buy_now"
+            android:background="@drawable/btn_light_yellow_ripple"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+
+            />
+        <Button
+            android:id="@+id/btn_add_to_shopping_cart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="@string/add_to_shopping_cart"
+            android:background="@drawable/btn_yellow_ripple"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            />
+    </LinearLayout>
+</layout>

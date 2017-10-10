@@ -32,12 +32,16 @@ public abstract class BaseSubscriber<T> extends DisposableSubscriber<T> {
         progress.setMessage(context.getString(R.string.loading));
     }
 
+
     @Override
     public void onError(Throwable e) {
         //LogUtil.loge(RetrofitClient.TAG, "onError:"+e.toString());
         // todo error somthing
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
+        }
+        if (!NetworkUtil.isNetworkAvailable(context)) {
+            return;
         }
         if(e instanceof ResponeException){
             onError((ResponeException)e);
@@ -64,19 +68,22 @@ public abstract class BaseSubscriber<T> extends DisposableSubscriber<T> {
         LogUtil.logd(RetrofitClient.TAG,"http request is starting!");
         // todo some common as show loadding  and check netWork is NetworkAvailable
         // if  NetworkAvailable no !   must to call onCompleted
-        if (!NetworkUtil.isNetworkAvailable(context)) {
-            ToastUtil.showShortToast(context,R.string.no_network);
-            onComplete();
-        }
-
        if (progress != null){
            if (progress.isShowing()) {
                progress.dismiss();
            }
-           progress.show();
+           //progress.show();
        }
+        if (!NetworkUtil.isNetworkAvailable(context)) {
+            ToastUtil.showShortToast(context,R.string.no_network);
+            onComplete();
+            return;
+        }
+
        super.onStart();
     }
+
+
 
 
     //public abstract void onSuccessWithoutData(SuccessWithoutDataException e);

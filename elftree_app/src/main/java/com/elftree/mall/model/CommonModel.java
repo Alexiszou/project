@@ -9,18 +9,26 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.Since;
 import com.orhanobut.logger.Logger;
 
+import org.greenrobot.greendao.annotation.Transient;
+
+import java.io.Serializable;
+
 import okhttp3.RequestBody;
 
 /**
  * Created by zouhongzhi on 2017/8/26.
  */
 
-public abstract class CommonModel {
+public abstract class CommonModel implements Serializable{
 
+    public static final long serialVersionUID = 1L;
     public static final String JSON_MEDIA_TYPE = "application/json; charset=utf-8";
 
+    @Transient
     @Expose
     private long TimeStamp ;
+
+    @Transient
     @Expose
     private String sign;
 

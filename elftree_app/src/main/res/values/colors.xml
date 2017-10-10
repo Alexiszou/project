@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#25A665</color>
+    <color name="colorPrimaryDark">#25A665</color>
+    <color name="colorAccent">#25A665</color>
+    
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="darkPrimary">#444945</color>
+    <color name="greenPrimary">#25A665</color>
+    <color name="hintTextColor">#CDCCD4</color>
+    <color name="grayPrimary">#999999</color>
+    <color name="graySecondary">#666666</color>
+    <color name="rippleColor">@color/primaryRippleColor</color>
+    <color name="darkRippleColor">#1F000000</color>
+    <color name="lightRippleColor">#33FFFFFF</color>
+    <color name="primaryRippleColor">#3325A665</color>
+
+    <color name="backgroundGray">#F5F5F5</color>
+    <color name="badge_back_color">#FF5F22</color>
+
+    <color name="yellowPrimary">#FA9720</color>
+    <color name="yellowSecondary">#FFC748</color>
+
+    <color name="line_indicator_selected_color">@color/colorPrimary</color>
+    <color name="line_indicator_unselected_color">#66FFFFFF</color>
+
+
 </resources>

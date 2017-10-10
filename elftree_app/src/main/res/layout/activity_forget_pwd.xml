@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.elftree.mall.activity.RegisterAndForgetPwdActivity">
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="title"
+            type="String"/>
+        <variable
+            name="next"
+            type="String"/>
+        <variable
+            name="clickEvent"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="isRegisterType"
+            type="boolean"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@{isRegisterType ? @color/white: @color/backgroundGray}">
+
+        <include
+            layout="@layout/layout_activity_header"
+            app:clickEvent="@{clickEvent}"
+            app:next="@{next}"
+            app:title="@{title}" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginTop="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingLeft="19dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_phone"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp">
+                    <EditText
+                        android:id="@+id/edittext_phone_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phoneNum_hint"
+                        android:inputType="phone"
+                        android:maxLength="@integer/phone_max_length"
+                        />
+                    <Button
+                        android:id="@+id/btn_get_verification_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/get_verification_code"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_alignParentRight="true"
+                        android:onClick="@{clickEvent.onClick}"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingLeft="19dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_verification"
+                    />
+                <EditText
+                    android:id="@+id/edittext_verification_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/verification_code_hint"
+                    android:inputType="number"
+                    android:maxLength="@integer/verification_max_length"
+                    android:layout_marginLeft="19dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingLeft="19dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:visibility="@{isRegisterType ? View.VISIBLE : View.GONE}"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_user"
+
+                    />
+                <EditText
+                    android:id="@+id/edittext_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username_hint"
+                    android:maxLength="@integer/username_max_length"
+                    android:layout_marginLeft="19dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingLeft="19dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_pwd"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp">
+                    <EditText
+                        android:id="@+id/edittext_pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@{isRegisterType ? @string/register_pwd_hint : @string/new_pwd_hint}"
+                        android:inputType="textPassword"
+                        android:maxLength="@integer/pwd_max_length"
+                        />
+                    <CheckBox
+                        android:id="@+id/checkbox_show_pwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/selector_ic_pwd"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkbox_user_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_agreement"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="32dp"
+            android:textSize="@dimen/miniTextSize"
+            android:textColor="@color/grayPrimary"
+            android:checked="true"
+            android:visibility="@{isRegisterType ? View.VISIBLE : View.GONE}"/>
+        <Button
+            android:id="@+id/btn_confirm"
+            style="@style/MyButtonStyle.CircleCornerButtonStyle"
+            android:text="@{isRegisterType ? @string/register : @string/confirm}"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="37dp"
+            android:onClick="@{clickEvent}"/>
+    </LinearLayout>
+</layout>

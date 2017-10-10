@@ -1,6 +1,7 @@
 package com.zhz.retrofitclient.net;
 
 
+import com.google.gson.annotations.Expose;
 import com.zhz.retrofitclient.exception.RequestException;
 
 /**
@@ -8,9 +9,12 @@ import com.zhz.retrofitclient.exception.RequestException;
  */
 public class BaseResponse<T> {
 
+    @Expose
     private String code;
+    @Expose
     private String msg;
 
+    @Expose
     private T data;
 
     public String getCode() {

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.elftree.mall.activity.GoodsInfoActivity">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="goodsInfo"
+            type="com.elftree.mall.model.GoodsInfo" />
+
+        <variable
+            name="html"
+            type="android.text.Html" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <com.tmall.ultraviewpager.UltraViewPager
+            android:id="@+id/ultraViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:upv_scrollmode="vertical">
+        </com.tmall.ultraviewpager.UltraViewPager>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E6FFFFFF"/>
+        <include layout="@layout/layout_shopping_tools"
+            />
+    </LinearLayout>
+</layout>

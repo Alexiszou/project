@@ -96,4 +96,8 @@ public class ResponeException extends BaseException {
     public void setmCause(Throwable mCause) {
         this.mCause = mCause;
     }
+
+    public boolean isSuccess(){
+        return strCode.equals(RequestException.RequestError.SUCCESS.getCode());
+    }
 }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="title"
+            type="String"/>
+        <variable
+            name="next"
+            type="String"/>
+        <variable
+            name="clickEvent"
+            type="android.view.View.OnClickListener"/>
+    </data>
+<LinearLayout
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="@dimen/header_height"
+    android:gravity="bottom"
+    android:background="@drawable/shape_search_header_bg"
+    android:paddingBottom="5dp"
+    >
+
+    <ImageView
+        android:id="@+id/imageview_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/small_logo"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="15dp"/>
+    <ImageButton
+        android:id="@+id/ibtn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+        android:visibility="gone"/>
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="visible">
+        <EditText
+            android:id="@+id/edittext_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_hint"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:background="@drawable/selector_edittext_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="25dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            />
+        <ImageButton
+            android:id="@+id/ibtn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_clear"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:onClick="@{clickEvent.onClick}"/>
+    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/ibtn_service"
+        android:layout_width="42dp"
+        android:layout_height="39dp"
+        android:src="@drawable/ic_service"
+        android:scaleType="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="-5dp"
+        android:onClick="@{clickEvent.onClick}"
+        />
+</LinearLayout>
+</layout>

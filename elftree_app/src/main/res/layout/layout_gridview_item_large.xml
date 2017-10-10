@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="goods"
+            type="com.elftree.mall.model.Goods"/>
+    </data>
+<LinearLayout
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:gravity="center_horizontal"
+    android:background="@drawable/grid_item_ripple"
+    android:layout_margin="7dp">
+
+   <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/draweeview_icon"
+        android:layout_width="169dp"
+        android:layout_height="142dp"
+        app:placeholderImage="@drawable/null_image"
+        app:imageURI="@{goods.img1}"
+        />
+    <TextView
+        android:id="@+id/textview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/smallTextSize"
+        android:textColor="@color/graySecondary"
+        android:text="@{goods.goods_name}"
+        />
+    <TextView
+        android:id="@+id/textview_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/smallTextSize"
+        android:textColor="@color/yellowPrimary"
+        android:text="@{@string/price_format(goods.shop_price)}"
+        android:visibility="visible"
+        />
+</LinearLayout>
+</layout>

@@ -24,6 +24,12 @@ public class NetConfig {
 
     public static final String RESET_USER_INFO = "/Api/User/editUser";//修改昵称, 修改密码接口
 
+    public static final String GET_CATEGORY_LIST = "/Api/Cate/cateList";//商品分类列表接口
+
+    public static final String GET_GOODS_LIST = "/Api/Goods/goodsList";//获取商品列表信息
+
+    public static final String GET_GOODS_INFO = "/Api/Goods/goodsInfo";//获取商品详情
+
 
 
 
