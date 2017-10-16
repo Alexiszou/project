@@ -15,7 +15,7 @@
         <item name="android:buttonStyle">@style/MyButtonStyle</item>
         <item name="android:imageButtonStyle">@style/MyImageButtonStyle</item>
         <item name="imageButtonStyle">@style/MyImageButtonStyle</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/backgroundGray</item>
         <item name="editTextStyle">@style/MyEditTextStyle</item>
         <item name="android:textViewStyle">@style/MyTextViewStyle</item>
 

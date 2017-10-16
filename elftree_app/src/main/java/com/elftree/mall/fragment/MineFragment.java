@@ -8,9 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.elftree.mall.R;
+import com.elftree.mall.activity.AboutElftreeActivity;
+import com.elftree.mall.activity.CollectionActivity;
 import com.elftree.mall.activity.LoginActivity;
+import com.elftree.mall.activity.MyApplication;
 import com.elftree.mall.databinding.FragmentMineBinding;
 import com.elftree.mall.databinding.FragmentSortBinding;
+import com.elftree.mall.model.CommonModel;
+import com.elftree.mall.model.User;
 import com.elftree.mall.utils.CommonUtil;
 
 /**
@@ -41,20 +46,66 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void initViews(View view, Bundle bundle) {
-        mBinding.textview.setText("我的");
-        mBinding.textview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                CommonUtil.startActivity(mContext,LoginActivity.class,new Bundle());
-
-            }
-        });
+        if(!MyApplication.getInstances().isUserLogin()){
+            User user = MyApplication.getInstances().getCurUser();
+            mBinding.name.setText(user.getUsername());
+        }else{
+            mBinding.name.setText(MyApplication.getInstances().getCurUser().getUsername());
+        }
+        mBinding.setClickEvent(this);
     }
 
 
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()){
+            case R.id.user_container:
+                break;
+            case R.id.order:
+                if(!MyApplication.getInstances().isUserLogin()){
+                    CommonUtil.startActivity(mContext,LoginActivity.class);
+                }
+                break;
+            case R.id.waitPay:
+                if(!MyApplication.getInstances().isUserLogin()){
+                    CommonUtil.startActivity(mContext,LoginActivity.class);
+                }
+                break;
+            case R.id.waitSend:
+                if(!MyApplication.getInstances().isUserLogin()){
+                    CommonUtil.startActivity(mContext,LoginActivity.class);
+                }
+                break;
+            case R.id.waitReceive:
+                if(!MyApplication.getInstances().isUserLogin()){
+                    CommonUtil.startActivity(mContext,LoginActivity.class);
+                }
+                break;
+            case R.id.waitEvaluate:
+                if(!MyApplication.getInstances().isUserLogin()){
+                    CommonUtil.startActivity(mContext,LoginActivity.class);
+                }
+                break;
+            case R.id.coupon:
+                if(!MyApplication.getInstances().isUserLogin()){
+                    CommonUtil.startActivity(mContext,LoginActivity.class);
+                }
+                break;
+            case R.id.collection:
+                if(!MyApplication.getInstances().isUserLogin()){
+                    CommonUtil.startActivity(mContext,LoginActivity.class);
+                }else {
+                    CommonUtil.startActivity(mContext, CollectionActivity.class);
+                }
+                break;
+            case R.id.share:
+                break;
+            case R.id.about:
+                CommonUtil.startActivity(mContext, AboutElftreeActivity.class);
+                break;
+            case R.id.setting:
+                break;
+        }
     }
 }

@@ -13,7 +13,12 @@ public class CommonUtil {
     public static void startActivity(Context context,Class<?> clazz,Bundle bundle){
         Intent intent = new Intent();
         intent.setClass(context,clazz);
+        if(bundle != null)
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context,Class<?> clazz){
+        startActivity(context,clazz,null);
     }
 }

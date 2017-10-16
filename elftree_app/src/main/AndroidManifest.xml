@@ -47,6 +47,22 @@
             android:screenOrientation="portrait" >
 
         </activity>
+        <activity android:name=".activity.CollectionActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity android:name=".activity.AboutElftreeActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity android:name=".activity.GoodsCommentActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity android:name=".activity.SubmitOrderActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
         <receiver
             android:name=".receiver.JPushReceiver"
             android:enabled="true">

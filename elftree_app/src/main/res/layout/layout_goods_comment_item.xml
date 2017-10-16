@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+        <import type="com.elftree.mall.utils.TimeUtil"/>
+
+        <variable
+            name="comment"
+            type="com.elftree.mall.model.GoodsComment.ListBean"/>
+    </data>
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:background="@drawable/grid_item_ripple"
+    android:layout_marginTop="7dp"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp"
+    android:paddingRight="12dp"
+    android:paddingLeft="12dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/draweeview_avatar"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            style="@style/DraweeViewStyle"
+            app:imageURI="@{comment.header_img}"
+            app:roundAsCircle="true"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkPrimary"
+            android:textSize="@dimen/normalTextSize"
+            android:text="@{comment.username}"
+            android:layout_marginLeft="8dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grayPrimary"
+            android:textSize="@dimen/miniTextSize"
+            android:text="@{TimeUtil.dateFormat(comment.add_time)}"
+            android:layout_marginLeft="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/normalTextSize"
+            android:textColor="@color/darkPrimary"
+            android:text="@{comment.content}"
+            android:maxLines="4"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_comment_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+</LinearLayout>
+</layout>

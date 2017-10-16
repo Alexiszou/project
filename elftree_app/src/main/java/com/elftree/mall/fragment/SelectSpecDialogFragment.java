@@ -89,8 +89,14 @@ public class SelectSpecDialogFragment extends BottomSheetDialogFragment implemen
         mBinding.setTitle(getResources().getString(R.string.select_spec));
         mBinding.setGoodsInfo(mGoodsInfo);
         mBinding.setClickEvent(this);
+        mBinding.edittextQuantity.setText(mQuantity);
 
         List<GoodsInfo.GoodsSpecalBean> specList = mGoodsInfo.getGoods_specal();
+        if(specList == null || specList.size()== 0){
+            //没有规格
+            mSpecText = getResources().getString(R.string.no_spec);
+            return;
+        }
 
         if(specIdArray == null)
             specIdArray = new String[specList.size()];
@@ -140,7 +146,7 @@ public class SelectSpecDialogFragment extends BottomSheetDialogFragment implemen
             });
         }
 
-        mBinding.edittextQuantity.setText(mQuantity);
+
     }
 
     @Override

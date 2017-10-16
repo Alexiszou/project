@@ -23,6 +23,7 @@ public abstract class CommonModel implements Serializable{
 
     public static final long serialVersionUID = 1L;
     public static final String JSON_MEDIA_TYPE = "application/json; charset=utf-8";
+    public static final int INVALID_NUM = -1;
 
     @Transient
     @Expose
@@ -57,5 +58,9 @@ public abstract class CommonModel implements Serializable{
         Logger.d("model:"+ RetrofitCreator.getGson().toJson(this));
         return RequestBody.create(okhttp3.MediaType.parse(JSON_MEDIA_TYPE),
                 RetrofitCreator.getGson().toJson(this));
+    }
+
+    public boolean isValidNum(int num){
+        return num != INVALID_NUM ? true : false;
     }
 }

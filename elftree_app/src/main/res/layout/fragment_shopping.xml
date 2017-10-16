@@ -4,16 +4,136 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
+            name="title"
+            type="String"/>
+        <variable
+            name="checkListener"
+            type="android.widget.CompoundButton.OnCheckedChangeListener"/>
+        <variable
             name="clickEvent"
             type="android.view.View.OnClickListener"/>
     </data>
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGray"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
-    <TextView
-        android:id="@+id/textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <include layout="@layout/layout_activity_header"
+            app:title="@{title}"/>
+
+
+
+        <Button
+            android:id="@+id/btn_get_coupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/yellowPrimary"
+            android:textSize="@dimen/smallTextSize"
+            android:text="@string/get_coupon"
+            android:layout_gravity="right"
+            android:visibility="visible"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/null_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width='wrap_content'
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_null_shopping_cart"/>
+
+        <TextView
+            android:id="@+id/textview_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grayPrimary"
+            android:textSize="@dimen/normalTextSize"
+            android:text="@string/null_shopping_cart"/>
+    </LinearLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:gravity="center_vertical"
+        android:background="@color/white">
+        <CheckBox
+            android:id="@+id/checkbox_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_all"
+            android:textColor="#333333"
+            android:textSize="@dimen/mlargeTextSize"
+            android:onClick="@{clickEvent}"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_amount"
+                android:textColor="@color/graySecondary"
+                android:textSize="@dimen/mlargeTextSize"
+                />
+            <TextView
+                android:id="@+id/textview_total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/yellowPrimary"
+                android:textSize="@dimen/mlargeTextSize"
+                android:layout_marginLeft="0dp"
+                android:text="0"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/textview_freight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grayPrimary"
+            android:textSize="@dimen/miniTextSize"
+            android:layout_marginLeft="12dp"
+            android:text="@string/not_include_freight"/>
+        <Button
+            android:id="@+id/btn_settlement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mlargeTextSize"
+            android:layout_marginLeft="10dp"
+            android:text="@string/settlement"
+            android:background="@drawable/btn_yellow_ripple"
+            android:onClick="@{clickEvent}"/>
+    </LinearLayout>
+
 </LinearLayout>
 </layout>

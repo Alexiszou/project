@@ -29,6 +29,7 @@ public class User extends CommonModel{
 
 
     @Expose
+
     private String mobile;
 
     @Transient
@@ -44,6 +45,63 @@ public class User extends CommonModel{
 
     @Expose
     private String nickname;
+
+    /*@Transient
+    @Expose
+    private int goods_id = INVALID_NUM;
+    @Transient
+    @Expose
+    private int goods_number = INVALID_NUM;*/
+
+    @Transient
+    @Expose
+    private String goods_id;
+    @Transient
+    @Expose
+    private String goods_number;
+    @Transient
+    @Expose
+    private String spec_attr;
+
+    @Transient
+    @Expose
+    private String cart_id;
+
+    @Transient
+    @Expose
+    private String page;
+
+    public String getGoods_id() {
+        return goods_id;
+    }
+
+    public void setGoods_id(String goods_id) {
+        this.goods_id = goods_id;
+    }
+
+    public String getGoods_number() {
+        return goods_number;
+    }
+
+    public void setGoods_number(String goods_number) {
+        this.goods_number = goods_number;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+
+    public String getSpec_attr() {
+        return spec_attr;
+    }
+
+    public void setSpec_attr(String spec_attr) {
+        this.spec_attr = spec_attr;
+    }
 
     @Generated(hash = 1712424460)
     public User(long id, String user_id, String mobile, String username,
@@ -108,14 +166,26 @@ public class User extends CommonModel{
         this.checkcode = checkcode;
     }
 
+    public String getCart_id() {
+        return cart_id;
+    }
+
+    public void setCart_id(String cart_id) {
+        this.cart_id = cart_id;
+    }
 
     public void genSign(){
-        String str = (!TextUtils.isEmpty(checkcode)?"checkcode="+checkcode:"")
+        String str = (!TextUtils.isEmpty(cart_id)?"cart_id="+cart_id:"")+
+                (!TextUtils.isEmpty(checkcode)?"&checkcode="+checkcode:"")
+                +(!TextUtils.isEmpty(goods_id)?"&goods_id="+goods_id:"")
+                +(!TextUtils.isEmpty(goods_number)?"&goods_number="+goods_number:"")
                 +(!TextUtils.isEmpty(mobile)?"&mobile=" + mobile :"")
                 +(!TextUtils.isEmpty(nickname)?"&nickname=" + nickname :"")
-                +(!TextUtils.isEmpty(username)?"&password="+password:"")
-                +(!TextUtils.isEmpty(password)?"&username="+username:"");
-        Logger.d("& index:"+str.indexOf("&"));
+                +(!TextUtils.isEmpty(page)?"&page="+page:"")
+                +(!TextUtils.isEmpty(password)?"&password="+password:"")
+                +(!TextUtils.isEmpty(spec_attr)?"&spec_attr="+spec_attr:"")
+                +(!TextUtils.isEmpty(username)?"&username="+username:"");
+        //Logger.d("& index:"+str.indexOf("&"));
         if(str.startsWith("&")){
             str = str.replaceFirst("&","");
         }

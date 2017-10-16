@@ -21,16 +21,17 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public Context mContext;
     public Gson mGson;
 
-    /*public static BaseFragment newInstance(Bundle bundle){
-        BaseFragment fragment = new BaseFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }*/
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mContext = context;
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mGson = RetrofitCreator.getGson();
         initDatas();
     }
@@ -44,7 +45,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        return createView(localInflater,container,savedInstanceState);
+        View view  = createView(localInflater,container,savedInstanceState);
+        return view;
     }
 
     @Override

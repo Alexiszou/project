@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="title"
+            type="String"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundGray">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+            <include
+                android:id="@+id/header"
+                layout="@layout/layout_activity_header"
+                app:title="@{title}"/>
+            <RelativeLayout
+                android:id="@+id/user_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/textview_user_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_rating"
+                    android:textColor="@color/darkPrimary"
+                    android:textSize="@dimen/normalTextSize" />
+
+                <RatingBar
+                    android:id="@+id/ratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/textview_user_rating"
+                    android:isIndicator="true"
+                    android:minHeight="15dp"
+                    android:progressDrawable="@drawable/ratingbar_back" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_more"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/null_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width='wrap_content'
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_null_shopping_cart"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/textview_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grayPrimary"
+                    android:textSize="@dimen/normalTextSize"
+                    android:text="@string/null_goods_comment"/>
+            </LinearLayout>
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/refreshlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"/>
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
+</layout>

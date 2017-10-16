@@ -1,6 +1,7 @@
 package com.elftree.mall.activity;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -83,7 +84,7 @@ public class CategoryActivity extends BaseActivity {
         mBinding.recyclerview.setAdapter(mAdapter);
 
 
-        mBinding.recyclerview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        mBinding.recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -106,7 +107,7 @@ public class CategoryActivity extends BaseActivity {
         });
         mAdapter.setmOnItemClickListener(new MyRecyclerAdapter.MyOnItemClickListener() {
             @Override
-            public void onItemClickListener(View view, int position) {
+            public void onItemClickListener(View view,ViewDataBinding binding, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("goods",mGoodsList.get(position));
                 CommonUtil.startActivity(mContext,GoodsInfoActivity.class,bundle);
@@ -149,36 +150,35 @@ public class CategoryActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<BaseResponse>(mContext) {
                     @Override
                     public void onError(ResponeException e) {
-                        Logger.e(e.toString());
-                        ToastUtil.showShortToast(mContext,e.getMessage());
+                        /*Logger.e(e.toString());
+                        ToastUtil.showShortToast(mContext,e.getMessage());*/
+                        super.onError(e);
                         mBinding.refreshlayout.setRefreshing(false);
                     }
 
                     @Override
                     public void onNext(BaseResponse response) {
                         mBinding.refreshlayout.setRefreshing(false);
-                        if(response.isOk() && response.getData() != null) {
-                            Gson gson = RetrofitCreator.getGson();
-                            String jsonStr = gson.toJson(response.getData());
+                        super.onNext(response);
 
-                            Logger.d(jsonStr);
-                            JsonObject jsonObject = new JsonParser().parse(jsonStr).getAsJsonObject();
-                            if(mTotalPage == 0)
-                                mTotalPage = jsonObject.getAsJsonPrimitive(JsonConfig.KEY_PAGE_TOTAL).getAsInt();
-                            Logger.d("page_total:"+mTotalPage);
-                            //Logger.d("page_total:"+jsonObject.getAsJsonPrimitive("page_total").getAsInt());
+                    }
 
-                            Type type = new TypeToken<List<Goods>>() {
-                            }.getType();
+                    @Override
+                    public void onSuccess(String jsonStr) {
+                        JsonObject jsonObject = new JsonParser().parse(jsonStr).getAsJsonObject();
+                        if(mTotalPage == 0)
+                            mTotalPage = jsonObject.getAsJsonPrimitive(JsonConfig.KEY_PAGE_TOTAL).getAsInt();
+                        Logger.d("page_total:"+mTotalPage);
+                        //Logger.d("page_total:"+jsonObject.getAsJsonPrimitive("page_total").getAsInt());
 
-                            List<Goods> list= RetrofitCreator.getGson().fromJson(
-                                    jsonObject.getAsJsonArray(JsonConfig.KEY_LIST),
-                                    type);
+                        Type type = new TypeToken<List<Goods>>() {
+                        }.getType();
 
-                            refreshViews(list,clearOldDatas);
-                        }else{
-                            ToastUtil.showShortToast(mContext,response.getMsg());
-                        }
+                        List<Goods> list= RetrofitCreator.getGson().fromJson(
+                                jsonObject.getAsJsonArray(JsonConfig.KEY_LIST),
+                                type);
+
+                        refreshViews(list,clearOldDatas);
                     }
                 });
     }

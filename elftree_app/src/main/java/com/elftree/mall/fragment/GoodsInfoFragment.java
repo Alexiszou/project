@@ -1,6 +1,7 @@
 package com.elftree.mall.fragment;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.elftree.mall.BR;
 import com.elftree.mall.R;
 import com.elftree.mall.activity.BaseActivity;
+import com.elftree.mall.activity.GoodsCommentActivity;
 import com.elftree.mall.activity.PhotoDraweeViewActivity;
 import com.elftree.mall.adapter.MyRecyclerAdapter;
 import com.elftree.mall.adapter.MyViewPagerAdapter;
@@ -26,7 +28,9 @@ import com.elftree.mall.handler.ClickTagHandler;
 import com.elftree.mall.model.Goods;
 import com.elftree.mall.model.GoodsInfo;
 import com.elftree.mall.utils.CommonUtil;
+import com.elftree.mall.utils.StringUtil;
 import com.elftree.mall.views.RecyclerViewDivider;
+import com.elftree.mall.views.ViewPagerScroller;
 import com.orhanobut.logger.Logger;
 import com.tmall.ultraviewpager.UltraViewPager;
 import com.zhz.retrofitclient.RetrofitClient;
@@ -36,6 +40,7 @@ import com.zhz.retrofitclient.net.BaseSubscriber;
 import com.zhz.retrofitclient.utils.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.relex.photodraweeview.PhotoDraweeView;
 
@@ -54,9 +59,41 @@ public class GoodsInfoFragment extends BaseFragment {
     private MyViewPagerAdapter mImageViewPagerAdapter;
 
     private String[] mSpecIdArray;
+    private String mProductId;
     private String mQuantity = "1";
     private String mSpecText = "";
 
+    public String[] getmSpecIdArray() {
+        return mSpecIdArray;
+    }
+
+    public void setmSpecIdArray(String[] mSpecIdArray) {
+        this.mSpecIdArray = mSpecIdArray;
+    }
+
+    public String getmQuantity() {
+        return mQuantity;
+    }
+
+    public void setmQuantity(String mQuantity) {
+        this.mQuantity = mQuantity;
+    }
+
+    public String getmProductId() {
+        return mProductId;
+    }
+
+    public void setmProductId(String mProductId) {
+        this.mProductId = mProductId;
+    }
+
+    public GoodsInfo getmGoodsInfo() {
+        return mGoodsInfo;
+    }
+
+    public void setmGoodsInfo(GoodsInfo mGoodsInfo) {
+        this.mGoodsInfo = mGoodsInfo;
+    }
 
     public static GoodsInfoFragment newInstance(Bundle bundle){
         GoodsInfoFragment fragment = new GoodsInfoFragment();
@@ -84,10 +121,15 @@ public class GoodsInfoFragment extends BaseFragment {
                 BR.imageUrl);
         mBinding.viewpager.setAdapter(mImageViewPagerAdapter);
         mBinding.viewpager.setInfiniteLoop(true);
-        mBinding.viewpager.setAutoScroll(2000);
+        mBinding.viewpager.setAutoScroll(3000);
+
+        ViewPagerScroller pagerScroller = new ViewPagerScroller(mContext);
+        pagerScroller.setScrollDuration(1000);//设置时间，时间越长，速度越慢
+        pagerScroller.initViewPagerScroll(mBinding.viewpager.getViewPager());
+
         mImageViewPagerAdapter.setItemClickListener(new MyRecyclerAdapter.MyOnItemClickListener() {
             @Override
-            public void onItemClickListener(View view, int position) {
+            public void onItemClickListener(View view,ViewDataBinding binding, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("imageList",mImageList);
                 bundle.putInt("position",position);
@@ -104,7 +146,7 @@ public class GoodsInfoFragment extends BaseFragment {
         RetrofitClient.getInstance().createBaseApi()
                 .json(NetConfig.GET_GOODS_INFO,goods.genRequestBody())
                 .subscribe(new BaseSubscriber<BaseResponse>(mContext) {
-                    @Override
+                    /*@Override
                     public void onError(ResponeException e) {
                         Logger.e(e.toString());
                         ToastUtil.showShortToast(mContext,e.getMessage());
@@ -120,6 +162,14 @@ public class GoodsInfoFragment extends BaseFragment {
                         }else{
                             ToastUtil.showShortToast(mContext,response.getMsg());
                         }
+                    }*/
+
+                    @Override
+                    public void onSuccess(String jsonStr) {
+                        /*String jsonStr = mGson.toJson(response.getData());
+                        Logger.d(jsonStr);*/
+                        mGoodsInfo = mGson.fromJson(jsonStr,GoodsInfo.class);
+                        refreshViews();
                     }
                 });
     }
@@ -136,10 +186,40 @@ public class GoodsInfoFragment extends BaseFragment {
         //添加删除线
         mBinding.textviewMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
-       // mGoodsInfo.getGoods_specal()
-        mBinding.btnSelectSpecification.setText(
-                Html.fromHtml(getString(R.string.specification_format,
-                        getString(R.string.select_specification))));
+        List<GoodsInfo.GoodsSpecalBean> list = mGoodsInfo.getGoods_specal();
+        if(list == null || list.size() == 0){
+            mBinding.btnSelectSpecification.setText(
+                    Html.fromHtml(getString(R.string.specification_format,
+                            getString(R.string.no_spec),
+                            mQuantity)));
+        }else{
+            //List<GoodsInfo.GoodsSpecalBean.ListBean> beanList = list.get(0).getList();
+            mSpecIdArray = new String[list.size()];
+            int index = 0;
+            for(GoodsInfo.GoodsSpecalBean specBean : list) {
+                for (GoodsInfo.GoodsSpecalBean.ListBean bean : specBean.getList()) {
+                    if (bean.isSelected()) {
+                        mBinding.btnSelectSpecification.setText(
+                                Html.fromHtml(getString(R.string.specification_format,
+                                        bean.getSpec_name(),
+                                        mQuantity)));
+                        mSpecIdArray[index] = bean.getSpec_id();
+                        index++;
+                    }
+                }
+            }
+            /*String[] temp = {
+                    "108","105"
+            };
+            Logger.d(StringUtil.arrayToStringSort(temp));*/
+            List<GoodsInfo.ProductsBean> productList = mGoodsInfo.getProducts();
+            for(GoodsInfo.ProductsBean product : productList){
+                if(product.getSpec_attr().equals(StringUtil.arrayToStringSort(mSpecIdArray))){
+                        mProductId = product.getProduct_id();
+                }
+            }
+        }
+
 
 
         mBinding.btnFreight.setText(Html.fromHtml(
@@ -156,7 +236,7 @@ public class GoodsInfoFragment extends BaseFragment {
 
 
         //评论区
-        MyRecyclerAdapter mCommentAdapter = new MyRecyclerAdapter(mContext,
+        /*MyRecyclerAdapter mCommentAdapter = new MyRecyclerAdapter(mContext,
                 mImageList,
                 R.layout.layout_comment_item,
                 BR.comment);
@@ -164,7 +244,7 @@ public class GoodsInfoFragment extends BaseFragment {
         mBinding.recyclerviewComment.setAdapter(mCommentAdapter);
         mBinding.recyclerviewComment.addItemDecoration(
                 new RecyclerViewDivider(mContext,
-                        LinearLayoutManager.HORIZONTAL));
+                        LinearLayoutManager.HORIZONTAL));*/
     }
 
 
@@ -180,7 +260,8 @@ public class GoodsInfoFragment extends BaseFragment {
             public void onDismiss(String msg,String quantity,String[] specIdArray) {
                 mBinding.btnSelectSpecification.setText(
                         Html.fromHtml(getString(R.string.specification_format,
-                        msg+"，"+quantity+"件")));
+                                msg,
+                                quantity)));
                 mSpecIdArray = specIdArray;
                 mQuantity = quantity;
             }
@@ -189,6 +270,11 @@ public class GoodsInfoFragment extends BaseFragment {
 
     }
 
+    private void startGoodsCommentActivity(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(GoodsCommentActivity.KEY_GOODS_ID,mBundleGoods.getGoods_id());
+        CommonUtil.startActivity(mContext,GoodsCommentActivity.class,bundle);
+    }
     @Override
     public void onClick(View v) {
 
@@ -197,6 +283,9 @@ public class GoodsInfoFragment extends BaseFragment {
                 showSelectSpecDialog();
                 break;
             case R.id.btn_freight:
+                break;
+            case R.id.user_rating:
+                startGoodsCommentActivity();
                 break;
             default:
                 break;

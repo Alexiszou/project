@@ -50,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public abstract void initDatas(Bundle savedInstanceState);
     public abstract void initViews();
 
-    public static void checkVeriCode(final Context context, User user,final OnSuccessInterface successInterface){
+    /*public static void checkVeriCode(final Context context, User user,final OnSuccessInterface successInterface){
         RetrofitClient.getInstance().
                 createBaseApi()
                 .json(NetConfig.CHECK_VERIFICATION_CODE,user.genRequestBody())
@@ -68,10 +68,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                     public void onNext(BaseResponse response) {
 
                     }
+
+
                 });
     }
 
     public interface OnSuccessInterface{
         void onSuccess();
-    }
+    }*/
 }

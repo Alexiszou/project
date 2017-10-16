@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.elftree.mall.activity.CollectionActivity">
+    <data>
+        <variable
+            name="title"
+            type="String"/>
+        <variable
+            name="next"
+            type="String"/>
+        <variable
+            name="clickEvent"
+            type="android.view.View.OnClickListener"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundGray"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+            <include
+                android:id="@+id/header"
+                layout="@layout/layout_activity_header"
+                app:title="@{title}"
+                app:next="@{next}"
+                app:clickEvent="@{clickEvent}"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/null_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width='wrap_content'
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_null_shopping_cart"/>
+
+            <TextView
+                android:id="@+id/textview_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grayPrimary"
+                android:textSize="@dimen/normalTextSize"
+                android:text="@string/null_collection"/>
+        </LinearLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refreshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:background="@color/white"
+            android:visibility="gone">
+            <CheckBox
+                android:id="@+id/checkbox_select_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_all"
+                android:textColor="#333333"
+                android:textSize="@dimen/mlargeTextSize"
+                android:onClick="@{clickEvent}"
+                android:layout_centerVertical="true"/>
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mlargeTextSize"
+                android:layout_marginLeft="10dp"
+                android:text="@string/delete"
+                android:background="@drawable/btn_yellow_ripple"
+                android:onClick="@{clickEvent}"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

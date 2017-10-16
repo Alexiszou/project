@@ -9,9 +9,11 @@ import android.content.res.TypedArray;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -57,6 +59,10 @@ public class MainActivity extends BaseActivity {
     private String[] mTabTextArray;
     private int[] mTabIconArray;
 
+    private MallFragment mallFragment;
+    private SortFragment sortFragment;
+    private ShoppingFragment shoppingFragment;
+    private MineFragment mineFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +102,47 @@ public class MainActivity extends BaseActivity {
         setBadgeNum(mBinding.header.ibtnService,9);
 
         mBinding.viewpager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        //mBinding.viewpager.setOffscreenPageLimit(4);
 
         mBinding.tab.setupWithViewPager(mBinding.viewpager);
+        mBinding.tab.clearOnTabSelectedListeners();
+        mBinding.tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mBinding.viewpager.setCurrentItem(tab.getPosition(),false);
+                //Logger.d("tab position:"+tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        mBinding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position != 0 && position != 1){
+                    mBinding.header.getRoot().setVisibility(View.GONE);
+                }else{
+                    mBinding.header.getRoot().setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
 
         for(int i=0;i<mTabTextArray.length;i++){
@@ -143,20 +188,24 @@ public class MainActivity extends BaseActivity {
             switch (position){
                 case 0:
                     //商城
-                    fragment =  MallFragment.newInstance(null);
-                    break;
+                    if(mallFragment == null)
+                    mallFragment =  MallFragment.newInstance(null);
+                    return mallFragment;
                 case 1:
                     //分类
-                    fragment =  SortFragment.newInstance(null);
-                    break;
+                    if(sortFragment == null)
+                    sortFragment =  SortFragment.newInstance(null);
+                    return sortFragment;
                 case 2:
                     //购物车
-                    fragment =  ShoppingFragment.newInstance(null);
-                    break;
+                    if(shoppingFragment == null)
+                    shoppingFragment =  ShoppingFragment.newInstance(null);
+                    return shoppingFragment;
                 case 3:
                     //我的
-                    fragment =  MineFragment.newInstance(null);
-                    break;
+                    if(mineFragment == null)
+                        mineFragment =  MineFragment.newInstance(null);
+                    return mineFragment;
                 default:
                     fragment =  MallFragment.newInstance(null);
                     break;

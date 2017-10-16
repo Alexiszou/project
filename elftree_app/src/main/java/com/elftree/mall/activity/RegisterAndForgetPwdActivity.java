@@ -122,6 +122,11 @@ public class RegisterAndForgetPwdActivity extends BaseActivity {
                             mHandler.sendMessage(msg);
                         }
                     }
+
+                    @Override
+                    public void onSuccess(String response) {
+
+                    }
                 });
     }
     private void confirm(){
@@ -209,6 +214,11 @@ public class RegisterAndForgetPwdActivity extends BaseActivity {
                                 finish();
                             }
                         }
+
+                        @Override
+                        public void onSuccess(String response) {
+
+                        }
                     });
                 }
         /*checkVeriCode(this, user, new OnSuccessInterface() {
@@ -243,6 +253,11 @@ public class RegisterAndForgetPwdActivity extends BaseActivity {
 
                     @Override
                     public void onNext(BaseResponse response) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
 
                     }
                 });

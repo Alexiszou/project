@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.elftree.mall.activity.MainActivity">
     <data>
         <variable
             name="clickEvent"
@@ -11,13 +12,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.elftree.mall.activity.MainActivity">
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <include
         android:id="@+id/header"
         layout="@layout/layout_search_header"
         app:clickEvent="@{clickEvent}"/>
-    <android.support.v4.view.ViewPager
+    <com.elftree.mall.views.MyViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

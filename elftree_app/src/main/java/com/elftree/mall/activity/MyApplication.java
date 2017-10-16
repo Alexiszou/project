@@ -6,15 +6,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.multidex.MultiDex;
 
 import com.elftree.mall.BuildConfig;
+import com.elftree.mall.R;
 import com.elftree.mall.config.NetConfig;
 import com.elftree.mall.config.SystemConfig;
 import com.elftree.mall.greendao.DaoMaster;
 import com.elftree.mall.greendao.DaoSession;
 import com.elftree.mall.greendao.MyDevOpenHelper;
+import com.elftree.mall.model.User;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.zhz.retrofitclient.RetrofitClient;
+import com.zhz.retrofitclient.utils.ToastUtil;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -77,6 +80,20 @@ public class MyApplication extends Application {
     }
 
 
+    public User getCurUser(){
+        if(mDaoSession.getUserDao().loadAll().size() == 0){
+            ToastUtil.showShortToast(this, R.string.hint_no_login);
+            return new User();
+        }else{
+            return mDaoSession.getUserDao().loadAll().get(0);
+        }
+    }
+    public boolean isUserLogin(){
+        if(mDaoSession.getUserDao().loadAll().size() != 0){
+            return true;
+        }
+        return false;
+    }
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);

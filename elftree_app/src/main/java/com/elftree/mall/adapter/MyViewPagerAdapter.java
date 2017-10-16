@@ -58,7 +58,7 @@ public class MyViewPagerAdapter<T> extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 if(mOnItemClickListener != null){
-                    mOnItemClickListener.onItemClickListener(v,position);
+                    mOnItemClickListener.onItemClickListener(v,mBinding,position);
                 }
             }
         });

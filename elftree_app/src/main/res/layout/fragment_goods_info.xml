@@ -205,7 +205,8 @@
                         android:clickable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:padding="15dp"
+                        android:onClick="@{clickEvent}">
 
                         <TextView
                             android:id="@+id/textview_user_rating"

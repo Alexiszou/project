@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+
+        <variable
+            name="goods"
+            type="com.elftree.mall.model.Collection.ListBean"/>
+    </data>
+<LinearLayout
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:background="@drawable/grid_item_ripple"
+    android:layout_marginTop="7dp"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp"
+    android:paddingRight="12dp"
+    android:paddingLeft="12dp">
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"/>
+   <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/draweeview_icon"
+        android:layout_width="92dp"
+        android:layout_height="92dp"
+        style="@style/DraweeViewStyle"
+        app:imageURI="@{goods.img1}"
+        />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+            <TextView
+                android:id="@+id/textview_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/smallTextSize"
+                android:textColor="@color/darkPrimary"
+                android:text="@{goods.goods_name}"/>
+
+
+            <TextView
+                android:id="@+id/textview_spec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:textColor="@color/grayPrimary"
+                android:layout_marginTop="7dp"
+                android:visibility="invisible"
+                />
+                <!--android:text="@{goods.spec_attr_value}"
+                android:visibility="@{!TextUtils.isEmpty(goods.spec_attr_value) ? View.VISIBLE : View.INVISIBLE}"-->
+
+
+            <TextView
+                android:id="@+id/textview_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/yellowPrimary"
+                android:textSize="@dimen/smallTextSize"
+                android:text="@{@string/price_format(Double.parseDouble(goods.shop_price))}"
+                android:layout_marginTop="20dp"
+                />
+        </LinearLayout>
+    <ImageView
+        android:id="@+id/imageview_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_more"
+
+        android:layout_gravity="center_vertical"/>
+</LinearLayout>
+</layout>

@@ -15,8 +15,8 @@
             type="com.elftree.mall.model.GoodsInfo" />
 
         <variable
-            name="html"
-            type="android.text.Html" />
+            name="clickEvent"
+            type="android.view.View.OnClickListener" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,13 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:upv_scrollmode="vertical">
-        </com.tmall.ultraviewpager.UltraViewPager>
+            app:upv_scrollmode="vertical"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#E6FFFFFF"/>
+            android:background="#E6FFFFFF"
+            android:visibility="gone"/>
         <include layout="@layout/layout_shopping_tools"
-            />
+            app:clickEvent="@{clickEvent}"/>
     </LinearLayout>
 </layout>

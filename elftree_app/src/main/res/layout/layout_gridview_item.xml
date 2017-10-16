@@ -22,7 +22,7 @@
         android:id="@+id/draweeview_icon"
         android:layout_width="75dp"
         android:layout_height="68dp"
-        app:placeholderImage="@drawable/null_image"
+        style="@style/DraweeViewStyle"
         app:imageURI="@{category.icon}"
         />
     <TextView

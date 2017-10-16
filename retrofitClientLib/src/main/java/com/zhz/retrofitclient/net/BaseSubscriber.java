@@ -5,12 +5,14 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.zhz.retrofitclient.R;
 import com.zhz.retrofitclient.RetrofitClient;
 import com.zhz.retrofitclient.exception.ExceptionHandle;
 import com.zhz.retrofitclient.exception.RequestException;
 import com.zhz.retrofitclient.exception.ResponeException;
 import com.zhz.retrofitclient.exception.SuccessWithoutDataException;
+import com.zhz.retrofitclient.gson.GsonFactory;
 import com.zhz.retrofitclient.utils.LogUtil;
 import com.zhz.retrofitclient.utils.NetworkUtil;
 import com.zhz.retrofitclient.utils.ToastUtil;
@@ -21,8 +23,9 @@ import io.reactivex.subscribers.DisposableSubscriber;
 /**
  * BaseSubscriber
  */
-public abstract class BaseSubscriber<T> extends DisposableSubscriber<T> {
+public abstract class BaseSubscriber<T extends BaseResponse> extends DisposableSubscriber<T> {
 
+    private static final String TAG = BaseSubscriber.class.getSimpleName();
     private Context context;
     private ProgressDialog progress;
 
@@ -84,10 +87,26 @@ public abstract class BaseSubscriber<T> extends DisposableSubscriber<T> {
     }
 
 
+    @Override
+    public void onNext(T response) {
+        if(response.isOk() && response.getData() != null) {
+            Gson gson = GsonFactory.create();
+            String jsonStr = gson.toJson(response.getData());
 
+            LogUtil.logd(TAG,jsonStr);
+            onSuccess(jsonStr);
+        }else{
+            ToastUtil.showShortToast(context,response.getMsg());
+        }
+    }
 
     //public abstract void onSuccessWithoutData(SuccessWithoutDataException e);
-    public abstract void onError(ResponeException e);
+    public void onError(ResponeException e){
+        LogUtil.loge(TAG,e.toString());
+        ToastUtil.showShortToast(context,e.getMessage());
+    }
+
+    public abstract void onSuccess(String jsonStr);
 
 
 }

@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.elftree.mall.utils.MD5Util;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.orhanobut.logger.Logger;
 
 import okhttp3.RequestBody;
@@ -16,20 +17,22 @@ public class Goods extends CommonModel {
 
     //goods_id: 商品ID, shop_price:商品价格, img1:商品图片, goods_name:商品名称, url:商品详情接口地址,
     @Expose
+    @SerializedName(value = "goods_id", alternate = "goods_ids")
     private String goods_id = "0";
 
     @Expose private String shop_price;
     @Expose private String img1;
     @Expose private String goods_name;
     @Expose private String url;
+    @Expose private String page;
 
     public void genSign(){
-        String str = (!TextUtils.isEmpty(goods_id)?"goods_id=" + goods_id :"");
-                /*+(!TextUtils.isEmpty(mobile)?"&mobile=" + mobile :"")
-                +(!TextUtils.isEmpty(nickname)?"&nickname=" + nickname :"")
+        String str = (!TextUtils.isEmpty(goods_id)?"goods_id=" + goods_id :"")
+                +(!TextUtils.isEmpty(page)?"&page=" + page :"");
+                /*+(!TextUtils.isEmpty(nickname)?"&nickname=" + nickname :"")
                 +(!TextUtils.isEmpty(username)?"&password="+password:"")
                 +(!TextUtils.isEmpty(password)?"&username="+username:"");*/
-        Logger.d("& index:"+str.indexOf("&"));
+        //Logger.d("& index:"+str.indexOf("&"));
         if(str.startsWith("&")){
             str = str.replaceFirst("&","");
         }
@@ -81,5 +84,13 @@ public class Goods extends CommonModel {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
     }
 }

@@ -3,6 +3,7 @@ package com.elftree.mall.fragment;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -97,6 +98,11 @@ public class SortFragment extends BaseFragment {
                         Logger.e(e.toString());
                         ToastUtil.showShortToast(mContext,e.getMessage());
                     }
+
+                    @Override
+                    public void onSuccess(String response) {
+
+                    }
                 });
         //mBinding.textview.setText("分类");
 
@@ -115,7 +121,7 @@ public class SortFragment extends BaseFragment {
 
         adapter.setmOnItemClickListener(new MyRecyclerAdapter.MyOnItemClickListener() {
             @Override
-            public void onItemClickListener(View view, int position) {
+            public void onItemClickListener(View view,ViewDataBinding binding, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("category",mCategoryList.get(position));
                 CommonUtil.startActivity(mContext,CategoryActivity.class,bundle);

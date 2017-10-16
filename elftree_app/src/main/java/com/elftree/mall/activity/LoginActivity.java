@@ -105,9 +105,14 @@ public class LoginActivity extends BaseActivity {
                             MyApplication.getInstances().getDaoSession().getUserDao().insert(user);
                             Logger.d("user dao:"+MyApplication.getInstances()
                                     .getDaoSession().getUserDao().loadAll().get(0).toString());
+                            finish();
                         }
                     }
 
+                    @Override
+                    public void onSuccess(String response) {
+
+                    }
                 });
 
     }

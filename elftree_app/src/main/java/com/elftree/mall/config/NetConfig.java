@@ -30,6 +30,22 @@ public class NetConfig {
 
     public static final String GET_GOODS_INFO = "/Api/Goods/goodsInfo";//获取商品详情
 
+    public static final String ADD_TO_CART = "/Api/Cart/cartAdd";//加入购物车,已有购物车中数量增减也可以使用该接口
+
+    public static final String ADD_TO_COLLECTION = "/Api/Collect/collectAdd";//添加商品到收藏列表
+
+    public static final String GET_CART_LIST = "/Api/Cart/cartGoodsList";//获取购物车中商品列表
+
+    public static final String DELETE_CART_GOODS = "/Api/Cart/cartDel";//移除购物车中数据
+
+    public static final String GET_COLLECTION_LIST = "/Api/Collect/collectList";//我的收藏, 商品收藏
+
+    public static final String DELETE_COLLECTION_GOODS = "/Api/Collect/collectDel";//删除收藏
+
+    public static final String GET_GOODS_COMMENT_LIST = "/Api/Comment/commentList";//商品的评价列表
+
+
+
 
 
 

@@ -21,8 +21,10 @@ import com.elftree.mall.fragment.ImageDetailFragment;
 import com.elftree.mall.handler.ClickTagHandler;
 import com.elftree.mall.model.Goods;
 import com.elftree.mall.model.GoodsInfo;
+import com.elftree.mall.model.User;
 import com.elftree.mall.retrofit.RetrofitCreator;
 import com.elftree.mall.utils.CommonUtil;
+import com.elftree.mall.utils.StringUtil;
 import com.elftree.mall.views.RecyclerViewDivider;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
@@ -32,8 +34,11 @@ import com.zhz.retrofitclient.net.BaseResponse;
 import com.zhz.retrofitclient.net.BaseSubscriber;
 import com.zhz.retrofitclient.utils.ToastUtil;
 
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Retrofit;
 
 /**
  * Created by zouhongzhi on 2017/9/27.
@@ -44,6 +49,11 @@ public class GoodsInfoActivity extends BaseActivity {
     private ActivityGoodsInfoBinding mBinding;
 
     private Goods mBundleGoods;
+
+    private GoodsInfoFragment mGoodsInfoFragment;
+    private ImageDetailFragment mImageDetailFragment;
+
+
 
 
 
@@ -56,6 +66,7 @@ public class GoodsInfoActivity extends BaseActivity {
     @Override
     public void initViews() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_goods_info);
+        mBinding.setClickEvent(this);
 
         MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager());
 
@@ -76,11 +87,11 @@ public class GoodsInfoActivity extends BaseActivity {
             Bundle bundle = null;
             switch (position){
                 case 0:
-                    fragment = GoodsInfoFragment.newInstance(getIntent().getExtras());
-                    break;
+                    mGoodsInfoFragment = GoodsInfoFragment.newInstance(getIntent().getExtras());
+                    return mGoodsInfoFragment;
                 case 1:
-                    fragment = ImageDetailFragment.newInstance(bundle);
-                    break;
+                    mImageDetailFragment = ImageDetailFragment.newInstance(bundle);
+                    return mImageDetailFragment;
                 default:
                     break;
             }
@@ -93,8 +104,90 @@ public class GoodsInfoActivity extends BaseActivity {
         }
     }
 
+    private void addToShoppingCart(){
+        /*if(mGoodsInfoFragment.getmSpecIdArray() == null){
+            ToastUtil.showShortToast(mContext,R.string.hint_select_spec);
+            return;
+        }*/
+        User user = new User();
+        user.setUsername(MyApplication.getInstances().getCurUser().getUsername());
+        /*user.setGoods_id(Integer.parseInt(mBundleGoods.getGoods_id()));
+        user.setGoods_number(Integer.parseInt(mGoodsInfoFragment.getmQuantity()));*/
+        if(mGoodsInfoFragment.getmProductId() != null) {
+            user.setGoods_id(mGoodsInfoFragment.getmProductId());
+        }else{
+            user.setGoods_id(mBundleGoods.getGoods_id());
+        }
+        user.setGoods_number(mGoodsInfoFragment.getmQuantity());
+
+        if(mGoodsInfoFragment.getmSpecIdArray() != null) {
+            user.setSpec_attr(StringUtil.arrayToString(mGoodsInfoFragment.getmSpecIdArray()));
+        }
+        RetrofitClient.getInstance().
+                createBaseApi().
+                json(NetConfig.ADD_TO_CART,user.genRequestBody())
+                .subscribe(new BaseSubscriber<BaseResponse>(mContext) {
+
+                    @Override
+                    public void onSuccess(String response) {
+
+                    }
+                });
+    }
+
+    private void addToCollection(){
+        User user = new User();
+        user.setUsername(MyApplication.getInstances().getCurUser().getUsername());
+        if(mGoodsInfoFragment.getmProductId() != null) {
+            user.setGoods_id(mGoodsInfoFragment.getmProductId());
+        }else{
+            user.setGoods_id(mBundleGoods.getGoods_id());
+        }
+        RetrofitClient.getInstance()
+                .createBaseApi()
+                .json(NetConfig.ADD_TO_COLLECTION,user.genRequestBody())
+                .subscribe(new BaseSubscriber(mContext) {
+                    @Override
+                    public void onSuccess(String response) {
+
+                    }
+
+                });
+    }
+    private void buyNow(){
+        Bundle bundle = new Bundle();
+        bundle.put
+        CommonUtil.startActivity(mContext,SubmitOrderActivity.class,bundle);
+    }
     @Override
     public void onClick(View v) {
+        if(!MyApplication.getInstances().isUserLogin()){
+            //未登录
+            CommonUtil.startActivity(mContext,LoginActivity.class,null);
+            return;
+        }
+        switch (v.getId()){
 
+            case R.id.btn_service:
+                //客服
+                break;
+            case R.id.btn_collection:
+                addToCollection();
+                //收藏
+                break;
+            case R.id.btn_shopping_cart:
+                //购物车
+                break;
+            case R.id.btn_buy_now:
+                buyNow();
+                //立即购买
+                break;
+            case R.id.btn_add_to_shopping_cart:
+                //加入购物车
+                addToShoppingCart();
+                break;
+            default:
+                break;
+        }
     }
 }
