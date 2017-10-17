@@ -102,6 +102,8 @@
     <string name="know_freight_text">了解运费</string>
     <string name="coupon_price">优惠券</string>
 
+    <string name="submit_order">提交订单</string>
+    <string name="total_pay_format">实付款：<![CDATA[<font color="#FA9720">¥%s</font>]]></string>
     <string name="comment">评价</string>
     <string name="share_app">分享返利</string>
     <string name="about_elftree">关于精灵树</string>

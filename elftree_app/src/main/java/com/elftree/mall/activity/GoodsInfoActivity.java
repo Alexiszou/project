@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 
@@ -19,6 +20,7 @@ import com.elftree.mall.databinding.ActivityGoodsInfoBinding;
 import com.elftree.mall.fragment.GoodsInfoFragment;
 import com.elftree.mall.fragment.ImageDetailFragment;
 import com.elftree.mall.handler.ClickTagHandler;
+import com.elftree.mall.model.Cart;
 import com.elftree.mall.model.Goods;
 import com.elftree.mall.model.GoodsInfo;
 import com.elftree.mall.model.User;
@@ -156,7 +158,38 @@ public class GoodsInfoActivity extends BaseActivity {
     }
     private void buyNow(){
         Bundle bundle = new Bundle();
-        bundle.put
+
+        Cart.ListBean bean = new Cart.ListBean();
+        bean.setGoods_name(mGoodsInfoFragment.getmGoodsInfo().getGoods_name());
+        if(!TextUtils.isEmpty(mGoodsInfoFragment.getmProductId())) {
+            bean.setGoods_id(mGoodsInfoFragment.getmProductId());
+        }else{
+            bean.setGoods_id(mBundleGoods.getGoods_id());
+        }
+        bean.setSpec_attr_value(mGoodsInfoFragment.getmSpecText()+"x"+mGoodsInfoFragment.getmQuantity());
+        if(mGoodsInfoFragment.getmSpecIdArray() != null){
+            bean.setSpec_attr(StringUtil.arrayToStringSort(mGoodsInfoFragment.getmSpecIdArray()));
+        }
+
+        bean.setGoods_number(mGoodsInfoFragment.getmQuantity());
+        if(mGoodsInfoFragment.getmGoodsInfo().getImg() != null &&
+                mGoodsInfoFragment.getmGoodsInfo().getImg().size() >0) {
+            bean.setImage(mGoodsInfoFragment.getmGoodsInfo().getImg().get(0));
+        }
+
+        if(TextUtils.isEmpty(mGoodsInfoFragment.getmProductPrice())){
+            bean.setShop_price(mGoodsInfoFragment.getmGoodsInfo().getShop_price());
+        }else{
+            bean.setShop_price(mGoodsInfoFragment.getmProductPrice());
+        }
+        Cart cart = new Cart();
+        List<Cart.ListBean> list = new ArrayList<>();
+        //for(int i=0;i<10;i++) {
+            list.add(bean);
+        //}
+        cart.setList(list);
+        bundle.putSerializable(SubmitOrderActivity.KEY_DATA,cart);
+        bundle.putInt(SubmitOrderActivity.KEY_ORDER,SubmitOrderActivity.BUY_NOW_ORDER);
         CommonUtil.startActivity(mContext,SubmitOrderActivity.class,bundle);
     }
     @Override

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by zouhongzhi on 2017/10/12.
  */
 
-public class Cart {
+public class Cart extends CommonModel{
 
     /**
      * list : [{"cart_id":"1025","goods_id":"56","goods_name":"斯德尔・沙发S1","spec_attr":"","spec_attr_value":"","goods_number":"4","image":"/Uploads/thumb/20170816/s_59940d78dd17b.jpg"}]
@@ -36,7 +36,7 @@ public class Cart {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean extends CommonModel{
         /**
          * cart_id : 1025
          * goods_id : 56

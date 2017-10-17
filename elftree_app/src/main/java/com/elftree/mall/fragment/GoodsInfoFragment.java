@@ -62,6 +62,7 @@ public class GoodsInfoFragment extends BaseFragment {
     private String mProductId;
     private String mQuantity = "1";
     private String mSpecText = "";
+    private String mProductPrice ="";
 
     public String[] getmSpecIdArray() {
         return mSpecIdArray;
@@ -91,8 +92,25 @@ public class GoodsInfoFragment extends BaseFragment {
         return mGoodsInfo;
     }
 
+    public String getmSpecText() {
+        return mSpecText;
+    }
+
+    public void setmSpecText(String mSpecText) {
+        this.mSpecText = mSpecText;
+    }
+
     public void setmGoodsInfo(GoodsInfo mGoodsInfo) {
         this.mGoodsInfo = mGoodsInfo;
+    }
+
+
+    public String getmProductPrice() {
+        return mProductPrice;
+    }
+
+    public void setmProductPrice(String mProductPrice) {
+        this.mProductPrice = mProductPrice;
     }
 
     public static GoodsInfoFragment newInstance(Bundle bundle){
@@ -166,8 +184,8 @@ public class GoodsInfoFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(String jsonStr) {
-                        /*String jsonStr = mGson.toJson(response.getData());
-                        Logger.d(jsonStr);*/
+                        /*String jsonStr = mGson.toJson(response.getData());*/
+                        Logger.d(jsonStr);
                         mGoodsInfo = mGson.fromJson(jsonStr,GoodsInfo.class);
                         refreshViews();
                     }
@@ -199,6 +217,7 @@ public class GoodsInfoFragment extends BaseFragment {
             for(GoodsInfo.GoodsSpecalBean specBean : list) {
                 for (GoodsInfo.GoodsSpecalBean.ListBean bean : specBean.getList()) {
                     if (bean.isSelected()) {
+                        mSpecText = bean.getSpec_name();
                         mBinding.btnSelectSpecification.setText(
                                 Html.fromHtml(getString(R.string.specification_format,
                                         bean.getSpec_name(),
@@ -208,16 +227,8 @@ public class GoodsInfoFragment extends BaseFragment {
                     }
                 }
             }
-            /*String[] temp = {
-                    "108","105"
-            };
-            Logger.d(StringUtil.arrayToStringSort(temp));*/
-            List<GoodsInfo.ProductsBean> productList = mGoodsInfo.getProducts();
-            for(GoodsInfo.ProductsBean product : productList){
-                if(product.getSpec_attr().equals(StringUtil.arrayToStringSort(mSpecIdArray))){
-                        mProductId = product.getProduct_id();
-                }
-            }
+            refreshProductId();
+
         }
 
 
@@ -248,6 +259,17 @@ public class GoodsInfoFragment extends BaseFragment {
     }
 
 
+    private void refreshProductId(){
+        List<GoodsInfo.ProductsBean> productList = mGoodsInfo.getProducts();
+        if(productList != null && productList.size()>0) {
+            for (GoodsInfo.ProductsBean product : productList) {
+                if (product.getSpec_attr().equals(StringUtil.arrayToStringSort(mSpecIdArray))) {
+                    mProductId = product.getProduct_id();
+                    mProductPrice = product.getProduct_price();
+                }
+            }
+        }
+    }
     private void showSelectSpecDialog(){
         Bundle bundle = new Bundle();
         bundle.putSerializable(SelectSpecDialogFragment.KEY_DATA,mGoodsInfo);
@@ -258,12 +280,14 @@ public class GoodsInfoFragment extends BaseFragment {
         fragment.setOnDismissListener(new SelectSpecDialogFragment.OnDismissListener() {
             @Override
             public void onDismiss(String msg,String quantity,String[] specIdArray) {
+                mSpecText = msg;
                 mBinding.btnSelectSpecification.setText(
                         Html.fromHtml(getString(R.string.specification_format,
                                 msg,
                                 quantity)));
                 mSpecIdArray = specIdArray;
                 mQuantity = quantity;
+                refreshProductId();
             }
         });
 
