@@ -92,8 +92,7 @@ public abstract class BaseSubscriber<T extends BaseResponse> extends DisposableS
         if(response.isOk() && response.getData() != null) {
             Gson gson = GsonFactory.create();
             String jsonStr = gson.toJson(response.getData());
-
-            LogUtil.logd(TAG,jsonStr);
+            //LogUtil.logd(TAG,jsonStr);
             onSuccess(jsonStr);
         }else{
             ToastUtil.showShortToast(context,response.getMsg());

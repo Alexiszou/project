@@ -44,6 +44,19 @@ public class NetConfig {
 
     public static final String GET_GOODS_COMMENT_LIST = "/Api/Comment/commentList";//商品的评价列表
 
+    public static final String GET_ADDRESS_LIST = "/Api/Address/addressList";//收货地址列表
+
+    public static final String GET_REGION_LIST = "/Api/Address/regionList";//获取地区信息
+
+    public static final String GET_REGION_INFO = "/Api/Address/regionInfo";//获取所有地区信息
+
+    public static final String ADD_ADDRESS = "/Api/Address/addressAdd";//添加收货地址
+
+    public static final String EDIT_ADDRESS = "/Api/Address/addressEdit";//编辑收货地址
+
+    public static final String DELETE_ADDRESS = "/Api/Address/addressDel";//删除收货地址
+
+
 
 
 

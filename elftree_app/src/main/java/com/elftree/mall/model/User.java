@@ -24,7 +24,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class User extends CommonModel{
 
     @Id
-    private long id;
+    private Long id;
     private String user_id;
 
 
@@ -71,6 +71,19 @@ public class User extends CommonModel{
     @Expose
     private String page;
 
+    @Transient
+    @Expose
+    private String parent_id;
+
+
+    public String getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(String parent_id) {
+        this.parent_id = parent_id;
+    }
+
     public String getGoods_id() {
         return goods_id;
     }
@@ -103,8 +116,8 @@ public class User extends CommonModel{
         this.spec_attr = spec_attr;
     }
 
-    @Generated(hash = 1712424460)
-    public User(long id, String user_id, String mobile, String username,
+    @Generated(hash = 1255709505)
+    public User(Long id, String user_id, String mobile, String username,
             String nickname) {
         this.id = id;
         this.user_id = user_id;
@@ -182,6 +195,7 @@ public class User extends CommonModel{
                 +(!TextUtils.isEmpty(mobile)?"&mobile=" + mobile :"")
                 +(!TextUtils.isEmpty(nickname)?"&nickname=" + nickname :"")
                 +(!TextUtils.isEmpty(page)?"&page="+page:"")
+                +(!TextUtils.isEmpty(parent_id)?"&parent_id="+parent_id:"")
                 +(!TextUtils.isEmpty(password)?"&password="+password:"")
                 +(!TextUtils.isEmpty(spec_attr)?"&spec_attr="+spec_attr:"")
                 +(!TextUtils.isEmpty(username)?"&username="+username:"");
@@ -199,14 +213,13 @@ public class User extends CommonModel{
         return super.genRequestBody();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
     }
-
     public String getUser_id() {
         return user_id;
     }
@@ -226,5 +239,9 @@ public class User extends CommonModel{
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
                 '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

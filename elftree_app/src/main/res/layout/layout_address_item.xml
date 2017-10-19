@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.elftree.mall.utils.CommonUtil"/>
+        <variable
+            name="title"
+            type="String" />
+        <variable
+            name="address"
+            type="com.elftree.mall.model.Address"/>
+        <variable
+            name="clickEvent"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/address_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/grid_item_ripple"
+        android:clickable="true"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{@string/address_format(CommonUtil.decode(address.receiver))}"
+                android:textColor="@color/graySecondary"
+                android:textSize="@dimen/normalTextSize" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{address.mobile}"
+                android:textColor="@color/graySecondary"
+                android:textSize="@dimen/normalTextSize" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@{@string/consignee_format(CommonUtil.decode(address.address+address.particular))}"
+            android:textColor="@color/graySecondary"
+            android:textSize="@dimen/normalTextSize"
+            />
+        </LinearLayout>
+        <include layout="@layout/layout_interval_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp">
+            <RadioButton
+                android:id="@+id/checkbox_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                android:textSize="@dimen/normalTextSize"
+                android:text="@{address.isDefault() ? @string/default_address : @string/set_default}"
+                android:checked="@{address.isDefault() ? true:false}"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                />
+            <TextView
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                android:textSize="@dimen/normalTextSize"
+                android:clickable="true"
+
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:text="@string/edit"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                android:textSize="@dimen/normalTextSize"
+                android:text="|"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkPrimary"
+                android:textSize="@dimen/normalTextSize"
+                android:layout_marginLeft="5dp"
+                android:clickable="true"
+
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:text="@string/delete"/>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/address_line"/>
+    </LinearLayout>
+</layout>

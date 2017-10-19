@@ -15,12 +15,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.elftree.mall.R;
+import com.elftree.mall.config.NetConfig;
+import com.elftree.mall.model.Region;
+import com.elftree.mall.model.RegionInfo;
+import com.elftree.mall.model.User;
+import com.elftree.mall.retrofit.RetrofitCreator;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.viewpagerindicator.as.library.indicator.RecyclerCirclePageIndicator;
 import com.viewpagerindicator.as.library.pageview.RecyclerViewPager;
+import com.zhz.retrofitclient.RetrofitClient;
+import com.zhz.retrofitclient.net.BaseSubscriber;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +65,48 @@ public class SplashAcitvity extends BaseActivity implements View.OnClickListener
             }
         }catch (Exception e){
             e.printStackTrace();
+        }
+
+        //获取地区信息并插入到数据库中
+        getRegionInfo();
+    }
+
+    private void getRegionInfo(){
+        User user = new User();
+        RetrofitClient.getInstance().createBaseApi()
+                .json(NetConfig.GET_REGION_INFO,user.genRequestBody())
+
+                .subscribe(new BaseSubscriber(mContext) {
+                    @Override
+                    public void onSuccess(final String jsonStr) {
+                        //Logger.d(jsonStr);
+                        //Type type = new TypeToken<ArrayList<Region>>(){}.getType();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RegionInfo regionInfo = mGson.fromJson(jsonStr,RegionInfo.class);
+                                insertRegionInfo(regionInfo);
+                            }
+                        }).start();
+
+                    }
+
+
+                });
+    }
+
+    private void insertRegionInfo(RegionInfo info){
+
+        MyApplication.getInstances().getDaoSession().getRegionDao().deleteAll();
+        for(Region region :info.getProvince()){
+            MyApplication.getInstances().getDaoSession().getRegionDao().insert(region);
+            //Logger.d(region.toString());
+        }
+        for(Region region :info.getCity()){
+            MyApplication.getInstances().getDaoSession().getRegionDao().insert(region);
+        }
+        for(Region region :info.getArea()){
+            MyApplication.getInstances().getDaoSession().getRegionDao().insert(region);
         }
     }
     @Override

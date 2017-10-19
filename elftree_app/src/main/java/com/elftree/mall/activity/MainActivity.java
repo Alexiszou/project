@@ -31,6 +31,7 @@ import com.elftree.mall.databinding.LayoutMainTabItemBinding;
 import com.elftree.mall.fragment.BlankFragment;
 import com.elftree.mall.fragment.MallFragment;
 import com.elftree.mall.fragment.MineFragment;
+import com.elftree.mall.fragment.SelectRegionDialogFragment;
 import com.elftree.mall.fragment.ShoppingFragment;
 import com.elftree.mall.fragment.SortFragment;
 import com.elftree.mall.model.User;
@@ -76,10 +77,10 @@ public class MainActivity extends BaseActivity {
         boolean isFirstStart = sharedPreferences.getBoolean("isFirstStart",true);
         if(isFirstStart){
             Intent intent = new Intent(this,SplashAcitvity.class);
-            //startActivity(intent);
-            if(!BuildConfig.DEBUG) {
+            startActivity(intent);
+            //if(!BuildConfig.DEBUG) {
                 sharedPreferences.edit().putBoolean("isFirstStart", false).commit();
-            }
+            //}
         }
 
         mTabTextArray = getResources().getStringArray(R.array.main_tab_title_array);
@@ -100,6 +101,7 @@ public class MainActivity extends BaseActivity {
     public void initViews(){
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         setBadgeNum(mBinding.header.ibtnService,9);
+        mBinding.setClickEvent(this);
 
         mBinding.viewpager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         //mBinding.viewpager.setOffscreenPageLimit(4);
@@ -228,6 +230,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ibtn_service:
+                SelectRegionDialogFragment fragment = SelectRegionDialogFragment.newInstance(null);
+                fragment.show(getSupportFragmentManager(),"selectRegion");
+                break;
 
+        }
     }
 }

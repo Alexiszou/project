@@ -24,7 +24,7 @@ public class UserDao extends AbstractDao<User, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property User_id = new Property(1, String.class, "user_id", false, "USER_ID");
         public final static Property Mobile = new Property(2, String.class, "mobile", false, "MOBILE");
         public final static Property Username = new Property(3, String.class, "username", false, "USERNAME");
@@ -44,7 +44,7 @@ public class UserDao extends AbstractDao<User, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"USER_ID\" TEXT," + // 1: user_id
                 "\"MOBILE\" TEXT," + // 2: mobile
                 "\"USERNAME\" TEXT," + // 3: username
@@ -60,7 +60,11 @@ public class UserDao extends AbstractDao<User, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, User entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String user_id = entity.getUser_id();
         if (user_id != null) {
@@ -86,7 +90,11 @@ public class UserDao extends AbstractDao<User, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, User entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String user_id = entity.getUser_id();
         if (user_id != null) {
@@ -111,13 +119,13 @@ public class UserDao extends AbstractDao<User, Long> {
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public User readEntity(Cursor cursor, int offset) {
         User entity = new User( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // user_id
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // mobile
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // username
@@ -128,7 +136,7 @@ public class UserDao extends AbstractDao<User, Long> {
      
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUser_id(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setMobile(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setUsername(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
@@ -152,7 +160,7 @@ public class UserDao extends AbstractDao<User, Long> {
 
     @Override
     public boolean hasKey(User entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

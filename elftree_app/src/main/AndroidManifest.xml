@@ -63,6 +63,14 @@
             android:screenOrientation="portrait" >
 
         </activity>
+        <activity android:name=".activity.AddressActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity android:name=".activity.AddOrEditAddressActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
         <receiver
             android:name=".receiver.JPushReceiver"
             android:enabled="true">

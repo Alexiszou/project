@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="com.elftree.mall.utils.CommonUtil"/>
         <variable
             name="title"
             type="String" />
+        <variable
+            name="address"
+            type="com.elftree.mall.model.Address"/>
 
         <variable
             name="clickEvent"
@@ -31,6 +34,7 @@
                 app:title="@{title}" />
 
             <LinearLayout
+                android:id="@+id/null_address_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
@@ -47,7 +51,7 @@
                     android:textSize="@dimen/normalTextSize" />
 
                 <TextView
-                    android:id="@+id/address"
+                    android:id="@+id/address_hint"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -62,6 +66,73 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_more" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/address_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:onClick="@{clickEvent}"
+                android:orientation="vertical"
+                android:padding="0dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingBottom="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/graySecondary"
+                            android:textSize="@dimen/normalTextSize"
+                            android:text="@{@string/address_format(CommonUtil.decode(address.receiver))}"
+                            />
+                        <TextView
+                            android:id="@+id/phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/graySecondary"
+                            android:textSize="@dimen/normalTextSize"
+                            android:text="@{address.mobile}"
+                            />
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/consignee_format(CommonUtil.decode(address.address+address.particular))}"
+                        android:textColor="@color/graySecondary"
+                        android:textSize="@dimen/normalTextSize"
+                        android:layout_marginTop="10dp"/>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_more"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/address_line"
+                    android:layout_marginTop="0dp"/>
             </LinearLayout>
         </LinearLayout>
 

@@ -3,6 +3,7 @@
     <integer name="phone_max_length">11</integer>
     <integer name="pwd_max_length">20</integer>
     <integer name="pwd_mini_length">6</integer>
+    <integer name="address_detail_mini_length">6</integer>
     <integer name="username_max_length">20</integer>
     <integer name="username_mini_length">4</integer>
 

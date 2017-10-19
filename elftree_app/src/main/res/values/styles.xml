@@ -53,6 +53,7 @@
     
     <style name="MyEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:textSize">@dimen/normalTextSize</item>
+        <item name="android:textColor">@color/darkPrimary</item>
         <item name="android:singleLine">true</item>
 
     </style>

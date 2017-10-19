@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.elftree.mall.BR;
 import com.elftree.mall.R;
+import com.elftree.mall.databinding.LayoutAddressItemBinding;
 import com.elftree.mall.databinding.LayoutCartItemBinding;
 import com.elftree.mall.databinding.LayoutCollectionItemBinding;
 import com.elftree.mall.databinding.LayoutFooterBinding;
@@ -31,7 +32,7 @@ import java.util.List;
  * Created by zouhongzhi on 2017/9/22.
  */
 
-public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
+public class MyRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int NUM_PER_PAGE = 10;//每页10条数据
     private static final int TYPE_ITEM = 0x0000;
@@ -43,9 +44,9 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
     private int mMode = MODE_NORMAL;
 
     //上拉加载更多
-    public static final int  PULLUP_LOAD_MORE=0x0000;
+    public static final int PULLUP_LOAD_MORE = 0x0000;
     //正在加载中
-    public static final int  LOADING_MORE=0x0001;
+    public static final int LOADING_MORE = 0x0001;
 
     //加载完成
     public static final int NO_MORE_DATA = 0x0002;
@@ -63,11 +64,11 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
     private boolean showFooter = false;
     private List<Boolean> checkStates;
 
-    public MyRecyclerAdapter(Context context,List<T> mDatas, int layoutId, int brId) {
-        this(context,mDatas,layoutId,brId,false);
+    public MyRecyclerAdapter(Context context, List<T> mDatas, int layoutId, int brId) {
+        this(context, mDatas, layoutId, brId, false);
     }
 
-    public MyRecyclerAdapter(Context context,List<T> mDatas, int layoutId, int brId,boolean showFooter) {
+    public MyRecyclerAdapter(Context context, List<T> mDatas, int layoutId, int brId, boolean showFooter) {
         this.mContext = context;
         this.mDatas = mDatas;
         this.layoutId = layoutId;
@@ -83,16 +84,16 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
 
     }
 
-    public void refreshAllCheckStates(boolean check){
-        for(int i=0;i<mDatas.size();i++){
-            checkStates.set(i,check);
+    public void refreshAllCheckStates(boolean check) {
+        for (int i = 0; i < mDatas.size(); i++) {
+            checkStates.set(i, check);
         }
         notifyDataSetChanged();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType ==  TYPE_ITEM) {
+        if (viewType == TYPE_ITEM) {
             ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
                     layoutId,
                     parent,
@@ -100,7 +101,7 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
             MyViewHolder viewHolder = new MyViewHolder(binding.getRoot());
             viewHolder.setBinding(binding);
             return viewHolder;
-        }else if(viewType == TYPE_FOOTER){
+        } else if (viewType == TYPE_FOOTER) {
             LayoutFooterBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
                     R.layout.layout_footer,
                     parent,
@@ -115,13 +116,13 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof MyRecyclerAdapter.MyViewHolder) {
-            final ViewDataBinding binding = ((MyRecyclerAdapter.MyViewHolder)holder).getBinding();
+        if (holder instanceof MyRecyclerAdapter.MyViewHolder) {
+            final ViewDataBinding binding = ((MyRecyclerAdapter.MyViewHolder) holder).getBinding();
             binding.setVariable(brId, mDatas.get(position));
             binding.executePendingBindings();
 
-            if(binding instanceof LayoutCartItemBinding){
-                if(checkStates.size() !=0) {
+            if (binding instanceof LayoutCartItemBinding) {
+                if (checkStates.size() != 0) {
                     ((LayoutCartItemBinding) binding).checkbox.setChecked(checkStates.get(position));
 
                     ((LayoutCartItemBinding) binding).checkbox.setOnClickListener(new View.OnClickListener() {
@@ -141,11 +142,11 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
                         }
                     });
                 }
-            }else if(binding instanceof LayoutCollectionItemBinding){
+            } else if (binding instanceof LayoutCollectionItemBinding) {
 
-                if(checkStates.size() !=0) {
+                if (checkStates.size() != 0) {
                     ((LayoutCollectionItemBinding) binding).checkbox.setChecked(checkStates.get(position));
-                    if(mMode == MODE_EDIT){
+                    if (mMode == MODE_EDIT) {
                         ((LayoutCollectionItemBinding) binding).checkbox.setVisibility(View.VISIBLE);
                         ((LayoutCollectionItemBinding) binding).imageviewMore.setVisibility(View.GONE);
                         ((LayoutCollectionItemBinding) binding).checkbox.setOnClickListener(new View.OnClickListener() {
@@ -156,56 +157,66 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
                                 }
                             }
                         });
-                    }else if(mMode == MODE_NORMAL){
+                    } else if (mMode == MODE_NORMAL) {
                         ((LayoutCollectionItemBinding) binding).checkbox.setVisibility(View.GONE);
                         ((LayoutCollectionItemBinding) binding).imageviewMore.setVisibility(View.VISIBLE);
                     }
 
                 }
-            }else if(binding instanceof LayoutGoodsCommentItemBinding){
-                LayoutGoodsCommentItemBinding dataBinding = (LayoutGoodsCommentItemBinding)binding;
-                GoodsComment.ListBean comment = (GoodsComment.ListBean)(mDatas.get(position));
-                /*List<String> list = new ArrayList<>();
-                list.add("http://www.elftree.cn/Uploads/thumb/20170721/s_5971b4cf01033.jpg");
-                list.add("http://www.elftree.cn/Uploads/thumb/20170721/s_5971b4cf01033.jpg");
-                list.add("http://www.elftree.cn/Uploads/thumb/20170721/s_5971b4cf01033.jpg");
-                list.add("http://www.elftree.cn/Uploads/thumb/20170721/s_5971b4cf01033.jpg");
-                list.add("http://www.elftree.cn/Uploads/thumb/20170721/s_5971b4cf01033.jpg");
-                list.add("http://www.elftree.cn/Uploads/thumb/20170721/s_5971b4cf01033.jpg");
-                list.add("http://www.elftree.cn/Uploads/thumb/20170721/s_5971b4cf01033.jpg");
-
-                comment.setImg(list);*/
-                if(comment.getImg() != null && comment.getImg().size() > 0){
+            } else if (binding instanceof LayoutGoodsCommentItemBinding) {
+                LayoutGoodsCommentItemBinding dataBinding = (LayoutGoodsCommentItemBinding) binding;
+                GoodsComment.ListBean comment = (GoodsComment.ListBean) (mDatas.get(position));
+                if (comment.getImg() != null && comment.getImg().size() > 0) {
                     MyRecyclerAdapter adapter = new MyRecyclerAdapter(mContext,
                             comment.getImg(),
                             R.layout.layout_comment_item_image,
                             BR.imageUrl);
                     dataBinding.recyclerviewCommentImage.setAdapter(adapter);
                     dataBinding.recyclerviewCommentImage.setLayoutManager(new LinearLayoutManager(mContext,
-                            LinearLayoutManager.HORIZONTAL,false));
+                            LinearLayoutManager.HORIZONTAL, false));
                 }
 
+            }else if(binding instanceof LayoutAddressItemBinding){
+                //我的收货地址
+                LayoutAddressItemBinding dataBinding = (LayoutAddressItemBinding)binding;
+                dataBinding.edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnItemClickListener != null) {
+                            mOnItemClickListener.onItemClickListener(v, binding, position);
+                        }
+                    }
+                });
+                dataBinding.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnItemClickListener != null) {
+                            mOnItemClickListener.onItemClickListener(v, binding, position);
+                        }
+                    }
+                });
             }
-        }else if(holder instanceof MyRecyclerAdapter.FooterViewHolder){
-            Logger.d("load_more_status:"+load_more_status);
-            switch (load_more_status){
+
+        } else if (holder instanceof MyRecyclerAdapter.FooterViewHolder) {
+            Logger.d("load_more_status:" + load_more_status);
+            switch (load_more_status) {
                 case PULLUP_LOAD_MORE:
-                    ((MyRecyclerAdapter.FooterViewHolder)holder).getBinding().setText(
+                    ((MyRecyclerAdapter.FooterViewHolder) holder).getBinding().setText(
                             mContext.getResources().getString(R.string.pullup_load_more)
                     );
                     break;
                 case LOADING_MORE:
-                    ((MyRecyclerAdapter.FooterViewHolder)holder).getBinding().setText(
+                    ((MyRecyclerAdapter.FooterViewHolder) holder).getBinding().setText(
                             mContext.getResources().getString(R.string.loading_more)
                     );
                     break;
                 case NO_MORE_DATA:
-                    ((MyRecyclerAdapter.FooterViewHolder)holder).getBinding().setText(
+                    ((MyRecyclerAdapter.FooterViewHolder) holder).getBinding().setText(
                             mContext.getResources().getString(R.string.no_more_data)
                     );
                     break;
                 default:
-                    ((MyRecyclerAdapter.FooterViewHolder)holder).getBinding().setText(
+                    ((MyRecyclerAdapter.FooterViewHolder) holder).getBinding().setText(
                             mContext.getResources().getString(R.string.pullup_load_more)
                     );
                     break;
@@ -218,17 +229,17 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        if(showFooter) {
+        if (showFooter) {
             return mDatas.size() + 1;
-        }else {
+        } else {
             return mDatas.size();
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(showFooter) {
-            if (position+1  == getItemCount()) {
+        if (showFooter) {
+            if (position + 1 == getItemCount()) {
                 return TYPE_FOOTER;
             }
         }
@@ -243,7 +254,7 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private ViewDataBinding binding;
 
@@ -254,21 +265,22 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
         public void setBinding(ViewDataBinding binding) {
             this.binding = binding;
         }
+
         public MyViewHolder(View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mOnItemClickListener != null){
-                        mOnItemClickListener.onItemClickListener(v,binding,getAdapterPosition());
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClickListener(v, binding, getAdapterPosition());
                     }
                 }
             });
         }
     }
 
-    public class FooterViewHolder extends RecyclerView.ViewHolder{
+    public class FooterViewHolder extends RecyclerView.ViewHolder {
 
         private LayoutFooterBinding mBinding;
 
@@ -291,9 +303,9 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
     }*/
 
     public boolean isFooter(int position) {
-        if(showFooter) {
-            return position+1 == getItemCount();
-        }else{
+        if (showFooter) {
+            return position + 1 == getItemCount();
+        } else {
             return false;
         }
     }
@@ -306,10 +318,11 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
      * LOADING_MORE=1;
      * //加载完成已经没有更多数据了
      * NO_MORE_DATA=2;
+     *
      * @param status
      */
-    public void changeLoadStatus(int status){
-        load_more_status=status;
+    public void changeLoadStatus(int status) {
+        load_more_status = status;
         notifyDataSetChanged();
     }
 
@@ -332,7 +345,7 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
 
     public void addMoreItem(List<T> newDatas) {
         mDatas.addAll(newDatas);
-        for(int i=0;i<mDatas.size();i++){
+        for (int i = 0; i < mDatas.size(); i++) {
             //checkStates.set(mDatas.size()+i,false);
             checkStates.add(false);
 
@@ -341,12 +354,12 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
     }
 
     //删除数据
-    public void deleteItem(int poistion){
+    public void deleteItem(int poistion) {
         checkStates.remove(poistion);
         mDatas.remove(poistion);
         notifyItemRemoved(poistion);
 
-        notifyItemRangeChanged(0,mDatas.size());
+        notifyItemRangeChanged(0, mDatas.size());
 
         /*mDatas.remove(poistion);
         checkStates.delete(poistion);
@@ -369,8 +382,8 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter <RecyclerView.Vie
         notifyDataSetChanged();
     }
 
-    public interface MyOnItemClickListener{
-        void onItemClickListener(View view,ViewDataBinding binding,int position);
+    public interface MyOnItemClickListener {
+        void onItemClickListener(View view, ViewDataBinding binding, int position);
     }
 
 }
