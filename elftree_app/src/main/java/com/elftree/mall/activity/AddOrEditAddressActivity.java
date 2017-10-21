@@ -1,5 +1,6 @@
 package com.elftree.mall.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.UserHandle;
@@ -18,6 +19,7 @@ import com.elftree.mall.model.Address;
 import com.elftree.mall.model.Region;
 import com.elftree.mall.model.User;
 import com.elftree.mall.utils.CommonUtil;
+import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.zhz.retrofitclient.RetrofitClient;
 import com.zhz.retrofitclient.net.BaseResponse;
@@ -26,7 +28,10 @@ import com.zhz.retrofitclient.utils.ToastUtil;
 
 import org.w3c.dom.Entity;
 
+import java.lang.reflect.Type;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Retrofit;
 
@@ -35,6 +40,7 @@ import retrofit2.Retrofit;
  */
 
 public class AddOrEditAddressActivity extends BaseActivity {
+    public static final String KEY_ADDRESS = "address";
     public static final int TYPE_ADD = 0x0000;
     public static final int TYPE_EDIT = 0x0001;
     public static final String KEY_DATA = "data";
@@ -64,10 +70,15 @@ public class AddOrEditAddressActivity extends BaseActivity {
         if(mType == TYPE_ADD){
             mBinding.setTitle(getResources().getString(R.string.add_new_address));
             mUrl = NetConfig.ADD_ADDRESS;
+            getAddressList();
         }else{
             mBinding.setTitle(getResources().getString(R.string.edit_address));
             mUrl = NetConfig.EDIT_ADDRESS;
-            mBinding.checkboxDefault.setVisibility(View.GONE);
+            if(mAddress.isDefault()) {
+                mBinding.checkboxDefault.setVisibility(View.GONE);
+            }else{
+                mBinding.checkboxDefault.setVisibility(View.VISIBLE);
+            }
             refreshLocation();
         }
         mBinding.setNext(getResources().getString(R.string.save));
@@ -84,12 +95,32 @@ public class AddOrEditAddressActivity extends BaseActivity {
                 }
             }
         });
-        getRegionList();
+
+
 
     }
 
-    private void getRegionList(){
+    private void getAddressList(){
+        User user = new User();
+        user.setUsername(MyApplication.getInstances().getCurUser().getUsername());
 
+        RetrofitClient.getInstance().createBaseApi()
+                .json(NetConfig.GET_ADDRESS_LIST,user.genRequestBody())
+                .subscribe(new BaseSubscriber(mContext) {
+                    @Override
+                    public void onSuccess(String jsonStr) {
+                        Logger.d(jsonStr);
+                        Type type = new TypeToken<ArrayList<Address>>(){}.getType();
+                        List<Address> list = mGson.fromJson(jsonStr,type);
+                        if(list != null && list.size()>0){
+                            mBinding.checkboxDefault.setVisibility(View.VISIBLE);
+                        }else{
+                            mBinding.checkboxDefault.setVisibility(View.GONE);
+                            mAddress.setIf_default("1");
+                        }
+                    }
+
+                });
     }
 
     private void showSelectRegionDialog(){
@@ -131,13 +162,14 @@ public class AddOrEditAddressActivity extends BaseActivity {
         mAddress.setAdd_time(null);
         mAddress.setAddress(null);
         mAddress.setZip_code(null);
+        mAddress.setEmail(null);
         try {
             String receiver = mBinding.edittextConsignee.getText().toString();
             if (TextUtils.isEmpty(receiver)) {
                 ToastUtil.showShortToast(mContext, R.string.consignee_hint);
                 return;
             }
-            mAddress.setReceiver(URLEncoder.encode(receiver, "UTF-8"));
+            mAddress.setReceiver(CommonUtil.encodeUTF(receiver));
             String phone = mBinding.edittextConsigneePhone.getText().toString();
             if (TextUtils.isEmpty(phone)) {
                 ToastUtil.showShortToast(mContext, R.string.consignee_phone_hint);
@@ -161,13 +193,14 @@ public class AddOrEditAddressActivity extends BaseActivity {
                 ToastUtil.showShortToast(mContext, R.string.address_detail_hint);
                 return;
             }
-            mAddress.setParticular(URLEncoder.encode(detail, "UTF-8"));
+            mAddress.setParticular(CommonUtil.encodeUTF(detail));
         }catch (Exception e){
             Logger.e(e.toString());
         }
 
         Logger.d(mAddress.toString());
 
+        Logger.d("url:"+mUrl);
 
         RetrofitClient.getInstance().createBaseApi()
                 .json(mUrl,mAddress.genRequestBody())
@@ -181,6 +214,11 @@ public class AddOrEditAddressActivity extends BaseActivity {
                     public void onNext(BaseResponse response) {
                         ToastUtil.showShortToast(mContext,response.getMsg());
                         if(response.isOk()){
+                            Intent intent = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable(KEY_ADDRESS,mAddress);
+                            intent.putExtras(bundle);
+                            setResult(RESULT_OK,intent);
                             finish();
                         }
                     }

@@ -38,6 +38,7 @@ public interface BaseApiService {
             @FieldMap Map<String, String> maps);
 
     //@Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
+
     @POST()
     Flowable<BaseResponse> json(
             @Url String url,

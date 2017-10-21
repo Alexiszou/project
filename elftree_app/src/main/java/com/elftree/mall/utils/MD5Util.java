@@ -1,5 +1,7 @@
 package com.elftree.mall.utils;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,10 +20,11 @@ public class MD5Util {
     }
 
     /***
-     * MD5加码 生成32位md5码
+     * MD5加密 生成32位md5码
      */
     public static String string2MD5(String inStr) {
-
+        //inStr = CommonUtil.encodeUTF(inStr);
+        //Logger.d("inStr:"+inStr);
         MessageDigest md5 = null;
         try {
             md5 = MessageDigest.getInstance("MD5");

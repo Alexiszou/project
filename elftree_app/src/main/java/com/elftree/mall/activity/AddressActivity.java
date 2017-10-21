@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.elftree.mall.BR;
@@ -63,6 +64,11 @@ public class AddressActivity extends BaseActivity {
                 }else if(view.getId() == dataBinding.delete.getId()){
                     //删除地址
                     deleteAddress(position);
+                }else if(view.getId() == dataBinding.rbtnDefault.getId()){
+                    //设为默认地址
+                    if(!mAddressList.get(position).isDefault()){
+                        setDefaultAddress(mAddressList.get(position));
+                    }
                 }
                 else{
                     Intent intent = new Intent();
@@ -76,6 +82,7 @@ public class AddressActivity extends BaseActivity {
             }
         });
     }
+
 
     private void getRemoteDatas(){
         User user = new User();
@@ -126,6 +133,29 @@ public class AddressActivity extends BaseActivity {
         getRemoteDatas();
     }
 
+    private void setDefaultAddress(Address address){
+        //address.setUsername(MyApplication.getInstances().getCurUser().getUsername());
+        address.setAdd_time(null);
+        address.setAddress(null);
+        address.setZip_code(null);
+        address.setEmail(null);
+        address.setIf_default("1");
+        RetrofitClient.getInstance().createBaseApi()
+                .json(NetConfig.EDIT_ADDRESS,address.genRequestBody())
+                .subscribe(new BaseSubscriber(mContext) {
+                    @Override
+                    public void onSuccess(String jsonStr) {
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse response) {
+                        ToastUtil.showShortToast(mContext,response.getMsg());
+                        if(response.isOk()){
+                            getRemoteDatas();
+                        }
+                    }
+                });
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){

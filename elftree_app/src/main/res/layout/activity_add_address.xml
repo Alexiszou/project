@@ -54,7 +54,7 @@
                     android:background="@null"
                     android:gravity="right"
                     android:padding="15dp"
-                    android:text="@{CommonUtil.decode(address.receiver)}"
+                    android:text="@{CommonUtil.decodeUTF(address.receiver)}"
                     />
             </LinearLayout>
             <include layout="@layout/layout_interval_line"/>
@@ -122,7 +122,7 @@
                 android:gravity="top"
                 android:padding="15dp"
                 android:singleLine="false"
-                android:text="@{CommonUtil.decode(address.particular)}"/>
+                android:text="@{CommonUtil.decodeUTF(address.particular)}"/>
 
 
         </LinearLayout>
@@ -137,6 +137,7 @@
             android:padding="15dp"
             android:layout_marginTop="15dp"
             android:background="@color/white"
+            android:visibility="gone"
             android:checked="@{address.isDefault()?true:false}"/>
     </LinearLayout>
 </layout>

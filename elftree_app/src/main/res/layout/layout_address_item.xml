@@ -40,7 +40,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{@string/address_format(CommonUtil.decode(address.receiver))}"
+                android:text="@{@string/consignee_format(CommonUtil.decodeUTF(address.receiver))}"
                 android:textColor="@color/graySecondary"
                 android:textSize="@dimen/normalTextSize" />
 
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{@string/consignee_format(CommonUtil.decode(address.address+address.particular))}"
+            android:text="@{@string/address_format(CommonUtil.decodeUTF(address.address+address.particular))}"
             android:textColor="@color/graySecondary"
             android:textSize="@dimen/normalTextSize"
             />
@@ -73,7 +73,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="15dp">
             <RadioButton
-                android:id="@+id/checkbox_default"
+                android:id="@+id/rbtn_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkPrimary"

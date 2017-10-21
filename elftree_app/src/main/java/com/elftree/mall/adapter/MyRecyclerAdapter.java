@@ -195,6 +195,14 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.View
                         }
                     }
                 });
+                dataBinding.rbtnDefault.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnItemClickListener != null) {
+                            mOnItemClickListener.onItemClickListener(v, binding, position);
+                        }
+                    }
+                });
             }
 
         } else if (holder instanceof MyRecyclerAdapter.FooterViewHolder) {

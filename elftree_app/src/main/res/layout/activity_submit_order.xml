@@ -101,7 +101,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/graySecondary"
                             android:textSize="@dimen/normalTextSize"
-                            android:text="@{@string/address_format(CommonUtil.decode(address.receiver))}"
+                            android:text="@{@string/consignee_format(CommonUtil.decodeUTF(address.receiver))}"
                             />
                         <TextView
                             android:id="@+id/phone"
@@ -116,7 +116,7 @@
                         android:id="@+id/address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/consignee_format(CommonUtil.decode(address.address+address.particular))}"
+                        android:text="@{@string/address_format(CommonUtil.decodeUTF(address.address+address.particular))}"
                         android:textColor="@color/graySecondary"
                         android:textSize="@dimen/normalTextSize"
                         android:layout_marginTop="10dp"/>
@@ -238,6 +238,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="100dp"
                     android:padding="15dp"
                     android:background="@color/white">
                     <LinearLayout
@@ -297,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="100dp">
+                        android:layout_marginBottom="0dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

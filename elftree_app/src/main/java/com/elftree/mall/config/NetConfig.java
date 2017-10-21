@@ -56,6 +56,10 @@ public class NetConfig {
 
     public static final String DELETE_ADDRESS = "/Api/Address/addressDel";//删除收货地址
 
+    public static final String ORDER_BUY = "/Api/Order/buy";//通过立即购买生成订单
+
+
+
 
 
 

@@ -48,7 +48,7 @@ public class Address extends CommonModel {
 
     public void genSign(){
         String str = (!TextUtils.isEmpty(addr_id)?"addr_id=" + addr_id :"")+
-                (!TextUtils.isEmpty(area)?"area=" + area :"")
+                (!TextUtils.isEmpty(area)?"&area=" + area :"")
                 +(!TextUtils.isEmpty(city)?"&city=" + city :"")
                 +(!TextUtils.isEmpty(if_default)?"&if_default=" + if_default :"")
                 +(!TextUtils.isEmpty(mobile)?"&mobile=" + mobile :"")

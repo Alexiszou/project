@@ -68,6 +68,14 @@ public class CommonUtil {
     }
 
     public static String encode(String str){
+        /*try{
+            str = URLEncoder.encode(str,ENCODE_TYPE);
+        }catch (Exception e){
+            Logger.e("encode utf-8 error:"+e.toString());
+        }*/
+        return str;
+    }
+    public static String encodeUTF(String str){
         try{
             str = URLEncoder.encode(str,ENCODE_TYPE);
         }catch (Exception e){
@@ -75,8 +83,7 @@ public class CommonUtil {
         }
         return str;
     }
-
-    public static String decode(String str){
+    public static String decodeUTF(String str){
         try{
             str = URLDecoder.decode(str,ENCODE_TYPE);
         }catch (Exception e){
