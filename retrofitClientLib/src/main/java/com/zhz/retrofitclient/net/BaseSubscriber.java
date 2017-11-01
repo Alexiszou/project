@@ -108,4 +108,6 @@ public abstract class BaseSubscriber<T extends BaseResponse> extends DisposableS
     public abstract void onSuccess(String jsonStr);
 
 
+
+
 }

@@ -1,5 +1,7 @@
 package com.elftree.mall.model;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
@@ -93,6 +95,10 @@ public class Cart extends CommonModel{
         }
 
         public void setSpec_attr_value(String spec_attr_value) {
+            /*if(TextUtils.isEmpty(spec_attr_value)){
+                this.spec_attr_value = "无规格";
+                return;
+            }*/
             this.spec_attr_value = spec_attr_value;
         }
 

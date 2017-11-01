@@ -12,6 +12,8 @@ import com.elftree.mall.activity.AboutElftreeActivity;
 import com.elftree.mall.activity.CollectionActivity;
 import com.elftree.mall.activity.LoginActivity;
 import com.elftree.mall.activity.MyApplication;
+import com.elftree.mall.activity.MyCouponActivity;
+import com.elftree.mall.activity.MyOrderActivity;
 import com.elftree.mall.databinding.FragmentMineBinding;
 import com.elftree.mall.databinding.FragmentSortBinding;
 import com.elftree.mall.model.CommonModel;
@@ -65,31 +67,53 @@ public class MineFragment extends BaseFragment {
             case R.id.order:
                 if(!MyApplication.getInstances().isUserLogin()){
                     CommonUtil.startActivity(mContext,LoginActivity.class);
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(MyOrderActivity.KEY_TYPE,MyOrderActivity.TYPE_ALL);
+                    CommonUtil.startActivity(mContext, MyOrderActivity.class,bundle);
                 }
                 break;
             case R.id.waitPay:
                 if(!MyApplication.getInstances().isUserLogin()){
                     CommonUtil.startActivity(mContext,LoginActivity.class);
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(MyOrderActivity.KEY_TYPE,MyOrderActivity.TYPE_PAY);
+                    CommonUtil.startActivity(mContext, MyOrderActivity.class,bundle);
                 }
                 break;
             case R.id.waitSend:
                 if(!MyApplication.getInstances().isUserLogin()){
                     CommonUtil.startActivity(mContext,LoginActivity.class);
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(MyOrderActivity.KEY_TYPE,MyOrderActivity.TYPE_SEND);
+                    CommonUtil.startActivity(mContext, MyOrderActivity.class,bundle);
                 }
                 break;
             case R.id.waitReceive:
                 if(!MyApplication.getInstances().isUserLogin()){
                     CommonUtil.startActivity(mContext,LoginActivity.class);
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(MyOrderActivity.KEY_TYPE,MyOrderActivity.TYPE_RECEIVE);
+                    CommonUtil.startActivity(mContext, MyOrderActivity.class,bundle);
                 }
                 break;
             case R.id.waitEvaluate:
                 if(!MyApplication.getInstances().isUserLogin()){
                     CommonUtil.startActivity(mContext,LoginActivity.class);
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(MyOrderActivity.KEY_TYPE,MyOrderActivity.TYPE_EVALUATE);
+                    CommonUtil.startActivity(mContext, MyOrderActivity.class,bundle);
                 }
                 break;
             case R.id.coupon:
                 if(!MyApplication.getInstances().isUserLogin()){
                     CommonUtil.startActivity(mContext,LoginActivity.class);
+                }else{
+                    CommonUtil.startActivity(mContext,MyCouponActivity.class);
                 }
                 break;
             case R.id.collection:

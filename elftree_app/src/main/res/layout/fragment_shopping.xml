@@ -38,7 +38,8 @@
             android:textSize="@dimen/smallTextSize"
             android:text="@string/get_coupon"
             android:layout_gravity="right"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            android:onClick="@{clickEvent}"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/null_container"

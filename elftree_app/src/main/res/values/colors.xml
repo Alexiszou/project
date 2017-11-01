@@ -25,5 +25,10 @@
     <color name="line_indicator_selected_color">@color/colorPrimary</color>
     <color name="line_indicator_unselected_color">#66FFFFFF</color>
 
+    <color name="color_zhifubao">#3C98E3</color>
+    <color name="color_wechat">#47B743</color>
+    
+    <color name="disable_text_color">#808080</color>
+
 
 </resources>

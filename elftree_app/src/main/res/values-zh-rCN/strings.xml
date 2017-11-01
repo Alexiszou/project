@@ -40,6 +40,9 @@
     <string name="goods_info">商品详情</string>
 
     <string name="price_format">¥%s</string>
+    <string name="canceled">已取消</string>
+    <string name="deleted">已删除</string>
+
     <string name="market_price_format">市场价¥%s</string>
     <string name="healthy_environmental_protection">健康环保</string>
     <string name="five_year_warranty">五年质保</string>
@@ -47,6 +50,7 @@
     <string name="full_house_matching">全屋搭配</string>
 
     <string name="specification_format">规格：%1$s,%2$s件</string>
+    <string name="spec_quantity_format">%1$sx%2$s</string>
     <string name="select_specification"><![CDATA[<font color="#999999" >请选择规格</font>]]></string>
 
     <string name="freight_format">运费：%s</string>
@@ -93,17 +97,19 @@
 
     <string name="address">收货地址</string>
     <string name="address_hint">请填写收货地址</string>
-    <string name="invoice">发票</string>
+    <string name="invoice">发票类型</string>
     <string name="invoice_hint">普通发票</string>
     <string name="select_coupon">选择优惠券</string>
-    <string name="select_coupon_hint">没有优惠券</string>
+    <string name="select_coupon_hint">请选择优惠券</string>
+    <string name="no_valid_coupon">没有可使用的优惠券</string>
     <string name="total_price">商品合计</string>
     <string name="freight_price">运费</string>
     <string name="know_freight_text">了解运费</string>
     <string name="coupon_price">优惠券</string>
-
+    <string name="coupon_format">%1$s（¥%2$s）</string>
     <string name="submit_order">提交订单</string>
     <string name="total_pay_format">实付款：<![CDATA[<font color="#FA9720">¥%s</font>]]></string>
+    <string name="total_pay">实际支付：</string>
     <string name="consignee_format">收货人：%s</string>
     <string name="address_format">收货地址：%s</string>
     <string name="my_address">我的收货地址</string>
@@ -122,6 +128,27 @@
     <string name="set_default">设为默认</string>
     <string name="default_address">默认地址</string>
 
+    <string name="valid_date_format">有效期至%s</string>
+    <string name="receive">领取</string>
+    <string name="received">已领取</string>
+    <string name="no_buy_goods">请选择您要购买的商品</string>
+    <string name="coupon_center">领券中心</string>
+
+
+    <string name="null_order_hint">你还没有订单，快去买买买吧！</string>
+    <string name="order_detail">订单详情</string>
+    <string name="copy_order_sn">复制单号</string>
+    <string name="service_time">服务时间：09:00-18:00</string>
+    <string name="online_service">在线客服</string>
+    <string name="phone_service">电话客服</string>
+
+    <string name="submit_order_date_format">下单时间：%s</string>
+    <string name="order_sn_format">订单编号：%s</string>
+    <string name="order_total_format">共%1$s件商品  合计: ¥ %2$s (含运费¥%3$s)</string>
+    <string name="select_invalid_coupon">该优惠券不可用</string>
+    <string name="pay_by_zhifubao">支付宝支付</string>
+    <string name="pay_by_wecaht">微信支付</string>
+    <string name="select_pay_method">选择付款方式</string>
     <string name="save">保存</string>
     <string name="comment">评价</string>
     <string name="share_app">分享返利</string>
@@ -157,5 +184,21 @@
         <item>板凳</item>
         <item>桌子</item>
         <item>茶几</item>
+    </string-array>
+
+
+
+    <string-array name="my_coupon_tab_title_array">
+        <item>未使用</item>
+        <item>已使用</item>
+        <item>已失效</item>
+    </string-array>
+
+    <string-array name="my_order_tab_title_array">
+        <item>全部</item>
+        <item>待付款</item>
+        <item>待发货</item>
+        <item>待收货</item>
+        <item>待评价</item>
     </string-array>
 </resources>

@@ -21,6 +21,7 @@ import com.elftree.mall.utils.CommonUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.zhz.retrofitclient.RetrofitClient;
@@ -145,6 +146,17 @@ public class CategoryActivity extends BaseActivity {
         Category category = new Category();
         category.setCat_id(mCategory.getCat_id());
         category.setPage(mCurPage);
+        /*try {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
+        }catch (Exception e){
+
+        }*/
         RetrofitClient.getInstance().createBaseApi()
                 .json(NetConfig.GET_GOODS_LIST,category.genRequestBody())
                 .subscribe(new BaseSubscriber<BaseResponse>(mContext) {

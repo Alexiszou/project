@@ -1,9 +1,11 @@
 package com.elftree.mall.utils;
 
 import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.orhanobut.logger.Logger;
 
@@ -40,6 +42,17 @@ public class CommonUtil {
     }
     public static void startActivityForResult(Activity context, Class<?> clazz,int requestCode){
         startActivityForResult(context,clazz,null,requestCode);
+    }
+
+    public static void startActivityForResult(Fragment fragment, Class<?> clazz, Bundle bundle, int requestCode){
+        Intent intent = new Intent();
+        intent.setClass(fragment.getActivity(),clazz);
+        if(bundle != null)
+            intent.putExtras(bundle);
+        fragment.startActivityForResult(intent,requestCode);
+    }
+    public static void startActivityForResult(Fragment fragment, Class<?> clazz, int requestCode){
+        startActivityForResult(fragment,clazz,null,requestCode);
     }
     /**
      * 判断手机号是否正确

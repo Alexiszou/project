@@ -50,11 +50,13 @@ public class SubmitOrder extends CommonModel {
     @Expose private String order_mark;
     @Expose private String pay_method;
     @Expose private String coupon_id;
+    @Expose private String cart_id;
 
     public void genSign(){
         String str = (!TextUtils.isEmpty(addr_id)?"addr_id=" + addr_id :"")
                 +(!TextUtils.isEmpty(address)?"&address=" + address :"")
                 +(!TextUtils.isEmpty(bank_num)?"&bank_num=" + bank_num :"")
+                +(!TextUtils.isEmpty(cart_id)?"&cart_id=" + cart_id :"")
                 +(!TextUtils.isEmpty(company_name)?"&company_name=" + company_name :"")
                 +(!TextUtils.isEmpty(coupon_id)?"&coupon_id=" + coupon_id :"")
                 +(!TextUtils.isEmpty(goods_id)?"&goods_id=" + goods_id :"")
@@ -81,6 +83,14 @@ public class SubmitOrder extends CommonModel {
     public RequestBody genRequestBody() {
         genSign();
         return super.genRequestBody();
+    }
+
+    public String getCart_id() {
+        return cart_id;
+    }
+
+    public void setCart_id(String cart_id) {
+        this.cart_id = cart_id;
     }
 
     public String getUsername() {

@@ -94,7 +94,7 @@ public class SelectSpecDialogFragment extends BottomSheetDialogFragment implemen
         List<GoodsInfo.GoodsSpecalBean> specList = mGoodsInfo.getGoods_specal();
         if(specList == null || specList.size()== 0){
             //没有规格
-            mSpecText = getResources().getString(R.string.no_spec);
+            //mSpecText = getResources().getString(R.string.no_spec);
             return;
         }
 

@@ -163,6 +163,7 @@
                     android:background="@color/white">
 
                     <LinearLayout
+                        android:id="@+id/selectInvoice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"
@@ -199,6 +200,7 @@
                     <include layout="@layout/layout_interval_line" />
 
                     <LinearLayout
+                        android:id="@+id/selectCoupon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"

@@ -56,7 +56,21 @@ public class NetConfig {
 
     public static final String DELETE_ADDRESS = "/Api/Address/addressDel";//删除收货地址
 
-    public static final String ORDER_BUY = "/Api/Order/buy";//通过立即购买生成订单
+    public static final String BUY_NOW = "/Api/Order/buy/";//通过立即购买生成订单
+
+    public static final String ORDER_BUY = "/Api/Order/orderAdd";//添加订单, 通过购物车添加
+
+    public static final String GET_COUPON_LIST = "/Api/Coupon/couponList";//获取可领取的优惠券列表
+
+    public static final String RECEIVE_COUPON= "/Api/Coupon/getCoupon";//领取优惠券
+
+    public static final String GET_VALID_COUPON= "/Api/Coupon/myCouponNotUsed";//获取可使用的优惠券
+
+    public static final String GET_USED__COUPON= "/Api/Coupon/myCouponUsed";//获取已使用的优惠券
+
+    public static final String GET_INVALID_COUPON= "/Api/Coupon/myCouponExpired";//获取已过期的优惠券
+
+    public static final String GET_ORDER_LIST= "/Api/Order/orderList";//我的订单列表
 
 
 

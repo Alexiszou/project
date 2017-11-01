@@ -166,7 +166,7 @@ public class GoodsInfoActivity extends BaseActivity {
         }else{
             bean.setGoods_id(mBundleGoods.getGoods_id());
         }
-        bean.setSpec_attr_value(mGoodsInfoFragment.getmSpecText()+"x"+mGoodsInfoFragment.getmQuantity());
+        bean.setSpec_attr_value(mGoodsInfoFragment.getmSpecText());
         if(mGoodsInfoFragment.getmSpecIdArray() != null){
             bean.setSpec_attr(StringUtil.arrayToStringSort(mGoodsInfoFragment.getmSpecIdArray()));
         }

@@ -75,6 +75,21 @@ public class User extends CommonModel{
     @Expose
     private String parent_id;
 
+    @Transient
+    @Expose
+    private String coupon_id;
+
+    @Transient
+    @Expose
+    private String type;
+
+    public String getCoupon_id() {
+        return coupon_id;
+    }
+
+    public void setCoupon_id(String coupon_id) {
+        this.coupon_id = coupon_id;
+    }
 
     public String getParent_id() {
         return parent_id;
@@ -187,9 +202,19 @@ public class User extends CommonModel{
         this.cart_id = cart_id;
     }
 
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public void genSign(){
-        String str = (!TextUtils.isEmpty(cart_id)?"cart_id="+cart_id:"")+
-                (!TextUtils.isEmpty(checkcode)?"&checkcode="+checkcode:"")
+        String str = (!TextUtils.isEmpty(cart_id)?"cart_id="+cart_id:"")
+                +(!TextUtils.isEmpty(checkcode)?"&checkcode="+checkcode:"")
+                +(!TextUtils.isEmpty(coupon_id)?"&coupon_id="+coupon_id:"")
                 +(!TextUtils.isEmpty(goods_id)?"&goods_id="+goods_id:"")
                 +(!TextUtils.isEmpty(goods_number)?"&goods_number="+goods_number:"")
                 +(!TextUtils.isEmpty(mobile)?"&mobile=" + mobile :"")
@@ -198,6 +223,7 @@ public class User extends CommonModel{
                 +(!TextUtils.isEmpty(parent_id)?"&parent_id="+parent_id:"")
                 +(!TextUtils.isEmpty(password)?"&password="+password:"")
                 +(!TextUtils.isEmpty(spec_attr)?"&spec_attr="+spec_attr:"")
+                +(!TextUtils.isEmpty(type)?"&type="+type:"")
                 +(!TextUtils.isEmpty(username)?"&username="+username:"");
         //Logger.d("& index:"+str.indexOf("&"));
         if(str.startsWith("&")){

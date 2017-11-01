@@ -43,15 +43,15 @@
                 android:textSize="@dimen/smallTextSize"
                 android:textColor="@color/darkPrimary"
                 android:text="@{goods.goods_name}"/>
-
+        <!--android:visibility="@{!TextUtils.isEmpty(goods.spec_attr_value) ? View.VISIBLE : View.INVISIBLE}"-->
         <TextView
             android:id="@+id/textview_spec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="11sp"
             android:textColor="@color/grayPrimary"
-            android:text="@{goods.spec_attr_value}"
-            android:visibility="@{!TextUtils.isEmpty(goods.spec_attr_value) ? View.VISIBLE : View.INVISIBLE}"
+            android:text="@{@string/spec_quantity_format(goods.spec_attr_value,goods.goods_number)}"
+
             android:layout_marginTop="7dp"
             />
 

@@ -92,6 +92,13 @@
         <item name="android:textColor">@color/graySecondary</item>
     </style>
 
+    <style name="MyCouponTabLayoutStyle" parent="MallFragmentTabLayoutStyle">
+        <item name="tabTextAppearance">@style/MyConponTabTextAppearance</item>
+        <item name="tabMode">fixed</item>
+    </style>
+    <style name="MyConponTabTextAppearance" parent="MallFragmentTabTextAppearance">
+        <item name="android:textSize">14dp</item>
+    </style>
     <style name="UltraViewPagerStyle">
         <!--<item name="upv_scrollmode">horizontal</item>
         <item name="rvp_triggerOffset">0.05</item>

@@ -1,11 +1,14 @@
 package com.elftree.mall.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +18,9 @@ import android.widget.CompoundButton;
 import com.elftree.mall.BR;
 import com.elftree.mall.R;
 import com.elftree.mall.activity.CategoryActivity;
+import com.elftree.mall.activity.CouponActivity;
 import com.elftree.mall.activity.MyApplication;
+import com.elftree.mall.activity.SubmitOrderActivity;
 import com.elftree.mall.adapter.MyRecyclerAdapter;
 import com.elftree.mall.config.NetConfig;
 import com.elftree.mall.databinding.FragmentShoppingBinding;
@@ -24,6 +29,7 @@ import com.elftree.mall.databinding.LayoutCartItemBinding;
 import com.elftree.mall.model.Cart;
 import com.elftree.mall.model.User;
 import com.elftree.mall.retrofit.RetrofitCreator;
+import com.elftree.mall.utils.CommonUtil;
 import com.orhanobut.logger.Logger;
 import com.zhz.retrofitclient.RetrofitClient;
 import com.zhz.retrofitclient.net.BaseResponse;
@@ -42,6 +48,7 @@ import retrofit2.Retrofit;
 
 public class ShoppingFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener{
 
+    public static final int REQUEST_SUBMIT = 0x0000;
     private FragmentShoppingBinding mBinding;
     private User mCurUser;
     private int mCurPage = CategoryActivity.START_PAGE_INDEX;
@@ -151,7 +158,7 @@ public class ShoppingFragment extends BaseFragment implements CompoundButton.OnC
         });
 
 
-        getRemoteDatas(false);
+        getRemoteDatas(true);
 
     }
 
@@ -283,6 +290,12 @@ public class ShoppingFragment extends BaseFragment implements CompoundButton.OnC
             case R.id.checkbox_select_all:
                 selectAllCheckChange();
                 break;
+            case R.id.btn_settlement:
+                settlement();
+                break;
+            case R.id.btn_get_coupon:
+                CommonUtil.startActivity(mContext, CouponActivity.class);
+                break;
             default:
                 break;
         }
@@ -312,6 +325,44 @@ public class ShoppingFragment extends BaseFragment implements CompoundButton.OnC
         }
         mBinding.textviewTotalAmount.setText(mTotalPrice+"");
     }
+
+    private void settlement(){
+        Cart cart = new Cart();
+        List<Cart.ListBean> list = new ArrayList<>();
+        for(int i=0;i<mAdapter.getCheckStates().size();i++){
+            if((boolean)mAdapter.getCheckStates().get(i)){
+                Cart.ListBean bean = mCartGoodsList.get(i);
+                //mCartGoodsList.get(i).setSpec_attr_value(mCartGoodsList.get(i).getSpec_attr_value()+"x"+mCartGoodsList.get(i).getGoods_number());
+                /*if(TextUtils.isEmpty(bean.getSpec_attr_value())){
+                    bean.setSpec_attr_value(getResources().getString(R.string.no_spec));
+                }*/
+                list.add(bean);
+            }
+        }
+        if(list != null && list.size()>0){
+            cart.setList(list);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(SubmitOrderActivity.KEY_DATA,cart);
+            bundle.putInt(SubmitOrderActivity.KEY_ORDER,SubmitOrderActivity.CART_ORDER);
+            CommonUtil.startActivityForResult(this,SubmitOrderActivity.class,bundle,REQUEST_SUBMIT);
+        }else{
+            ToastUtil.showShortToast(mContext,R.string.no_buy_goods);
+            return;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Logger.d("requestCode:"+requestCode);
+        //Logger.d("resultCode:"+resultCode);
+        if(requestCode == REQUEST_SUBMIT){
+            if(resultCode == Activity.RESULT_OK){
+                getRemoteDatas(true);
+            }
+        }
+    }
+
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 

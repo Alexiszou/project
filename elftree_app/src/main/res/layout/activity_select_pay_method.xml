@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="title"
+            type="String"/>
+        <variable
+            name="clickEvent"
+            type="android.view.View.OnClickListener"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/layout_activity_header"
+            app:title="@{title}"/>
+        
+        <LinearLayout
+            android:id="@+id/zhifubao"
+            android:layout_width="match_parent"
+            android:layout_height="176dp"
+            android:background="@drawable/grid_item_ripple"
+            android:clickable="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:onClick="@{clickEvent}">
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pay_by_zhi"
+                android:layout_marginTop="49dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_zhifubao"
+                android:textSize="@dimen/mlargeTextSize"
+                android:text="@string/pay_by_zhifubao"
+                android:layout_marginTop="17dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wechat"
+            android:layout_width="match_parent"
+            android:layout_height="176dp"
+            android:background="@drawable/grid_item_ripple"
+            android:clickable="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:onClick="@{clickEvent}">
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pay_by_wechat"
+                android:layout_marginTop="49dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_wechat"
+                android:textSize="@dimen/mlargeTextSize"
+                android:text="@string/wechat"
+                android:layout_marginTop="17dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

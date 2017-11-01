@@ -16,13 +16,20 @@ import android.widget.TextView;
 
 import com.elftree.mall.BR;
 import com.elftree.mall.R;
+import com.elftree.mall.activity.MyCouponActivity;
 import com.elftree.mall.databinding.LayoutAddressItemBinding;
 import com.elftree.mall.databinding.LayoutCartItemBinding;
 import com.elftree.mall.databinding.LayoutCollectionItemBinding;
+import com.elftree.mall.databinding.LayoutCouponItemBinding;
 import com.elftree.mall.databinding.LayoutFooterBinding;
 import com.elftree.mall.databinding.LayoutGoodsCommentItemBinding;
+import com.elftree.mall.databinding.LayoutMyOrderItemBinding;
+import com.elftree.mall.databinding.LayoutMyOrderItemGoodsBinding;
+import com.elftree.mall.fragment.MyCouponFragment;
+import com.elftree.mall.model.Coupon;
 import com.elftree.mall.model.Goods;
 import com.elftree.mall.model.GoodsComment;
+import com.elftree.mall.model.Order;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -203,6 +210,37 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.View
                         }
                     }
                 });
+            }else if(binding instanceof LayoutCouponItemBinding){
+                //优惠券
+                LayoutCouponItemBinding dataBinding = (LayoutCouponItemBinding)binding;
+                //if(mContext instanceof MyCouponActivity){
+                    dataBinding.receive.setVisibility(View.GONE);
+                //}
+                dataBinding.getRoot().setEnabled(((Coupon)mDatas.get(position)).isEnabled());
+            }else if(binding instanceof LayoutMyOrderItemBinding){
+                //我的订单
+                LayoutMyOrderItemBinding dataBinding = (LayoutMyOrderItemBinding)binding;
+                Order.ListBean data = (Order.ListBean)mDatas.get(position);
+                if (data.getOrder_goods() != null && data.getOrder_goods().size() > 0) {
+
+                    LayoutInflater inflater = LayoutInflater.from(mContext);
+                    for(Order.ListBean.OrderGoodsBean bean : data.getOrder_goods()) {
+
+                        LayoutMyOrderItemGoodsBinding goodsBinding = DataBindingUtil.inflate(inflater,
+                                R.layout.layout_my_order_item_goods,
+                                dataBinding.goodsContainer,
+                                true);
+                        goodsBinding.setOrderGoods(bean);
+                    }
+
+                }
+                dataBinding.type.setText(data.getOrderStatus(mContext));
+                dataBinding.total.setText(
+                        mContext.getResources().getString
+                                (R.string.order_total_format,
+                                        data.getTotal_num(),
+                                        data.getFormat_total_amount(),
+                                        data.getFreight_fee()));
             }
 
         } else if (holder instanceof MyRecyclerAdapter.FooterViewHolder) {
@@ -276,6 +314,7 @@ public class MyRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.View
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            //itemView.setEnabled(false);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

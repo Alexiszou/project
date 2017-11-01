@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -220,7 +221,7 @@ public class GoodsInfoFragment extends BaseFragment {
                         mSpecText = bean.getSpec_name();
                         mBinding.btnSelectSpecification.setText(
                                 Html.fromHtml(getString(R.string.specification_format,
-                                        bean.getSpec_name(),
+                                        mSpecText,
                                         mQuantity)));
                         mSpecIdArray[index] = bean.getSpec_id();
                         index++;
@@ -281,10 +282,17 @@ public class GoodsInfoFragment extends BaseFragment {
             @Override
             public void onDismiss(String msg,String quantity,String[] specIdArray) {
                 mSpecText = msg;
-                mBinding.btnSelectSpecification.setText(
-                        Html.fromHtml(getString(R.string.specification_format,
-                                msg,
-                                quantity)));
+                if(TextUtils.isEmpty(msg)){
+                    mBinding.btnSelectSpecification.setText(
+                            Html.fromHtml(getString(R.string.specification_format,
+                                    getString(R.string.no_spec),
+                                    mQuantity)));
+                }else {
+                    mBinding.btnSelectSpecification.setText(
+                            Html.fromHtml(getString(R.string.specification_format,
+                                    msg,
+                                    quantity)));
+                }
                 mSpecIdArray = specIdArray;
                 mQuantity = quantity;
                 refreshProductId();
