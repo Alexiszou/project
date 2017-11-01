@@ -146,17 +146,7 @@ public class CategoryActivity extends BaseActivity {
         Category category = new Category();
         category.setCat_id(mCategory.getCat_id());
         category.setPage(mCurPage);
-        /*try {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            });
-        }catch (Exception e){
-
-        }*/
         RetrofitClient.getInstance().createBaseApi()
                 .json(NetConfig.GET_GOODS_LIST,category.genRequestBody())
                 .subscribe(new BaseSubscriber<BaseResponse>(mContext) {

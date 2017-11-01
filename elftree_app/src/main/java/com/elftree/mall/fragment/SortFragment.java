@@ -8,21 +8,26 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import com.elftree.mall.BR;
 import com.elftree.mall.R;
 import com.elftree.mall.activity.CategoryActivity;
 import com.elftree.mall.activity.MyApplication;
+import com.elftree.mall.adapter.MyExpandableAdapter;
 import com.elftree.mall.adapter.MyRecyclerAdapter;
 import com.elftree.mall.config.NetConfig;
 import com.elftree.mall.databinding.FragmentMallBinding;
 import com.elftree.mall.databinding.FragmentSortBinding;
 import com.elftree.mall.model.Category;
 import com.elftree.mall.model.RequestModel;
+import com.elftree.mall.model.Series;
+import com.elftree.mall.model.User;
 import com.elftree.mall.retrofit.RetrofitCreator;
 
 import com.elftree.mall.utils.CommonUtil;
@@ -49,7 +54,12 @@ import java.util.List;
 public class SortFragment extends BaseFragment {
 
     private FragmentSortBinding mBinding;
-    private List<Category> mCategoryList;
+    private SeriesFragment mSeriesFragment;
+    private SeriesFragment mSpaceFragment;
+    private SeriesFragment mCategoryFragment;
+    private SeriesFragment mCurFragment;
+
+   // private String mUrl;
 
     public static SortFragment newInstance(Bundle bundle){
         SortFragment fragment = new SortFragment();
@@ -59,6 +69,10 @@ public class SortFragment extends BaseFragment {
 
     @Override
     public void initDatas() {
+        Bundle bundle = new Bundle();
+        bundle.putString(SeriesFragment.KEY_URL,NetConfig.GET_SERIES_LIST);
+        mSeriesFragment = SeriesFragment.newInstance(bundle);
+        mCurFragment = mSeriesFragment;
 
     }
 
@@ -70,66 +84,55 @@ public class SortFragment extends BaseFragment {
 
     @Override
     public void initViews(View view, Bundle bundle) {
-        RequestModel model = new RequestModel();
-        model.setParent_id("0");
-        RetrofitClient.getInstance().createBaseApi()
-                .json(NetConfig.GET_CATEGORY_LIST,model.genRequestBody())
-                .subscribe(new BaseSubscriber<BaseResponse>(mContext) {
-                    @Override
-                    public void onNext(BaseResponse response) {
-                        if(response.isOk() && response.getData() != null) {
-                            Gson gson = RetrofitCreator.getGson();
-                            String jsonStr = gson.toJson(response.getData());
-                            Logger.d(jsonStr);
-                            //mCategoryList = new ArrayList<Category>();
-
-                            Type type = new TypeToken<ArrayList<Category>>() {
-                            }.getType();
-
-                            mCategoryList = RetrofitCreator.getGson().fromJson(jsonStr, type);
-                            refreshViews();
-                        }else{
-                            ToastUtil.showShortToast(mContext,response.getMsg());
+        refreshViews();
+        mBinding.rbtnGruop.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rbtn_series:
+                        if(mSeriesFragment == null){
+                            Bundle bundle = new Bundle();
+                            bundle.putString(SeriesFragment.KEY_URL,NetConfig.GET_SERIES_LIST);
+                            mSeriesFragment = SeriesFragment.newInstance(bundle);
                         }
-                    }
+                        mCurFragment = mSeriesFragment;
+                        break;
+                    case R.id.rbtn_space:
+                        if(mSpaceFragment == null){
+                            Bundle bundle = new Bundle();
+                            bundle.putString(SeriesFragment.KEY_URL,NetConfig.GET_SPACE_LIST);
+                            mSpaceFragment = SeriesFragment.newInstance(bundle);
+                        }
+                        mCurFragment = mSpaceFragment;
+                        break;
+                    case R.id.rbtn_category:
+                        if(mCategoryFragment == null){
+                            Bundle bundle = new Bundle();
+                            bundle.putString(SeriesFragment.KEY_URL,NetConfig.GET_CATEGORY_LIST);
+                            mCategoryFragment = SeriesFragment.newInstance(bundle);
+                        }
+                        mCurFragment = mCategoryFragment;
+                        break;
+                }
+                refreshViews();
+            }
+        });
 
-                    @Override
-                    public void onError(ResponeException e) {
-                        Logger.e(e.toString());
-                        ToastUtil.showShortToast(mContext,e.getMessage());
-                    }
 
-                    @Override
-                    public void onSuccess(String response) {
-
-                    }
-                });
-        //mBinding.textview.setText("分类");
 
     }
+
+
 
 
 
     private void refreshViews(){
-        MyRecyclerAdapter<Category> adapter = new MyRecyclerAdapter<>(mContext,
-                mCategoryList,
-                R.layout.layout_gridview_item,
-                BR.category);
 
-        mBinding.recyclerviewSceneCategory.setLayoutManager(new GridLayoutManager(mContext,4));
-        mBinding.recyclerviewSceneCategory.setAdapter(adapter);
-
-        adapter.setmOnItemClickListener(new MyRecyclerAdapter.MyOnItemClickListener() {
-            @Override
-            public void onItemClickListener(View view,ViewDataBinding binding, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("category",mCategoryList.get(position));
-                CommonUtil.startActivity(mContext,CategoryActivity.class,bundle);
-
-            }
-        });
-
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.replace(R.id.container,mCurFragment);
+        ft.commitAllowingStateLoss();
     }
+
 
     @Override
     public void onClick(View v) {

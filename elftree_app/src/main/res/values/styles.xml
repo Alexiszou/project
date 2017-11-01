@@ -120,6 +120,6 @@
 
     <style name="DraweeViewStyle">
         <item name="placeholderImage">@drawable/null_image</item>
-        <item name="actualImageScaleType">fitCenter</item>
+        <item name="actualImageScaleType">fitXY</item>
     </style>
 </resources>

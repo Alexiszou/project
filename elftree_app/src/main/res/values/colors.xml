@@ -6,10 +6,12 @@
     
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="darkPrimary">#444945</color>
+    <!--<color name="darkPrimary">#444945</color>-->
+    <color name="darkPrimary">#222222</color>
     <color name="greenPrimary">#25A665</color>
     <color name="hintTextColor">#CDCCD4</color>
-    <color name="grayPrimary">#999999</color>
+    <!--<color name="grayPrimary">#999999</color>-->
+    <color name="grayPrimary">#9E9E9E</color>
     <color name="graySecondary">#666666</color>
     <color name="rippleColor">@color/primaryRippleColor</color>
     <color name="darkRippleColor">#1F000000</color>
@@ -29,6 +31,7 @@
     <color name="color_wechat">#47B743</color>
     
     <color name="disable_text_color">#808080</color>
+    <color name="drawee_mask">#59000000</color>
 
 
 </resources>

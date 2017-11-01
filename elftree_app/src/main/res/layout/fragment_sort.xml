@@ -7,7 +7,71 @@
             name="clickEvent"
             type="android.view.View.OnClickListener"/>
     </data>
-    <ScrollView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="15dp">
+        <RadioGroup
+            android:id="@+id/rbtnGruop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="90dp"
+            android:layout_marginRight="20dp"
+            android:padding="0dp">
+            <RadioButton
+                android:id="@+id/rbtn_series"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normalTextSize"
+                android:textColor="@drawable/sort_rbtn_color"
+                android:text="@string/series"
+                android:gravity="center"
+                android:checked="true"
+                android:button="@null"
+                android:padding="15dp"/>
+            <RadioButton
+                android:id="@+id/rbtn_space"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normalTextSize"
+                android:textColor="@drawable/sort_rbtn_color"
+                android:text="@string/space"
+                android:gravity="center"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"/>
+            <RadioButton
+                android:id="@+id/rbtn_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normalTextSize"
+                android:textColor="@drawable/sort_rbtn_color"
+                android:text="@string/category"
+                android:gravity="center"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"/>
+        </RadioGroup>
+        <include layout="@layout/layout_vertical_interval_line"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"/>
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <!--<ExpandableListView
+            android:id="@+id/expandList"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            >
+
+        </ExpandableListView>-->
+    </LinearLayout>
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroundGray"
@@ -50,5 +114,5 @@
 
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
 </layout>

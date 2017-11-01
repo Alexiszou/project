@@ -201,4 +201,8 @@
         <item>待收货</item>
         <item>待评价</item>
     </string-array>
+
+    <string name="series">系列</string>
+    <string name="space">空间</string>
+    <string name="category">品类</string>
 </resources>

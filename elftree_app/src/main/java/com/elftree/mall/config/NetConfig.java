@@ -24,7 +24,7 @@ public class NetConfig {
 
     public static final String RESET_USER_INFO = "/Api/User/editUser";//修改昵称, 修改密码接口
 
-    public static final String GET_CATEGORY_LIST = "/Api/Cate/cateList";//商品分类列表接口
+    //public static final String GET_CATEGORY_LIST = "/Api/Cate/cateList";//商品分类列表接口
 
     public static final String GET_GOODS_LIST = "/Api/Goods/goodsList";//获取商品列表信息
 
@@ -71,6 +71,11 @@ public class NetConfig {
     public static final String GET_INVALID_COUPON= "/Api/Coupon/myCouponExpired";//获取已过期的优惠券
 
     public static final String GET_ORDER_LIST= "/Api/Order/orderList";//我的订单列表
+
+    public static final String GET_SERIES_LIST= "/Api/Style/styleList";//获取系列列表
+    public static final String GET_SPACE_LIST= "/Api/Style/styleList";//获取品类列表
+    public static final String GET_CATEGORY_LIST= "/Api/Brand/brandList";//获取品类列表
+
 
 
 
