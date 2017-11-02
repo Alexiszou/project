@@ -141,17 +141,4 @@ public class MyExpandableAdapter<T extends Series> extends BaseExpandableListAda
         return 0;
     }
 
-    //添加数据
-    /*public void addItem(List<T> newDatas) {
-
-        mGroupList.clear();
-
-        this.addMoreItem(newDatas);
-    }
-
-    public void addMoreItem(List<T> newDatas) {
-        mGroupList.addAll(newDatas);
-
-        notifyDataSetChanged();
-    }*/
 }

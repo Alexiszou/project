@@ -84,5 +84,10 @@ dependencies {
     compile ('com.alibaba.android:ultraviewpager:1.0.6.1@aar') {
         transitive = true
     }
+    compile ('com.jph.takephoto:takephoto_library:4.0.3'){
+        transitive = false
+    }
+    /*compile 'com.darsh.multipleimageselect:multipleimageselect:1.0.4'*/
+    /*compile 'com.github.lovetuzitong:MultiImageSelector:1.2'*/
 
 }

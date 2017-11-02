@@ -14,8 +14,10 @@ import com.elftree.mall.adapter.MyRecyclerAdapter;
 import com.elftree.mall.config.JsonConfig;
 import com.elftree.mall.config.NetConfig;
 import com.elftree.mall.databinding.ActivityCategoryBinding;
+import com.elftree.mall.fragment.SeriesFragment;
 import com.elftree.mall.model.Category;
 import com.elftree.mall.model.Goods;
+import com.elftree.mall.model.Series;
 import com.elftree.mall.retrofit.RetrofitCreator;
 import com.elftree.mall.utils.CommonUtil;
 import com.google.gson.Gson;
@@ -40,11 +42,15 @@ import java.util.Map;
  */
 
 public class CategoryActivity extends BaseActivity {
+
+    private int mType = SeriesFragment.TYPE_SERIES;
+
+    public static final String KEY_CATEGORY = "category";
     private ActivityCategoryBinding mBinding;
 
     public static final int START_PAGE_INDEX = 1;
     private List<Goods> mGoodsList;
-    private Category mCategory;
+    private Series mCategory;
     private int mCurPage = START_PAGE_INDEX;
     private int mTotalPage;
 
@@ -54,13 +60,15 @@ public class CategoryActivity extends BaseActivity {
 
     @Override
     public void initDatas(Bundle savedInstanceState) {
-        mCategory = (Category)getIntent().getExtras().getSerializable("category");
+        mType = getIntent().getExtras().getInt(SeriesFragment.KEY_TYPE,SeriesFragment.TYPE_SERIES);
+        mCategory = (Series) getIntent().getExtras().getSerializable(KEY_CATEGORY);
+        Logger.d("mType:"+mType+",mCategory:"+mCategory);
     }
 
     @Override
     public void initViews() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_category);
-        mBinding.setTitle(mCategory.getCat_name());
+        mBinding.setTitle(mCategory.getStyle_name());
         mGoodsList = new ArrayList<>();
         mAdapter = new MyRecyclerAdapter<>(mContext,
                 mGoodsList,
@@ -144,8 +152,14 @@ public class CategoryActivity extends BaseActivity {
 
     private void getRemoteDatas(final boolean clearOldDatas){
         Category category = new Category();
-        category.setCat_id(mCategory.getCat_id());
-        category.setPage(mCurPage);
+        if(mType == SeriesFragment.TYPE_SERIES) {
+            category.setStyle_id(mCategory.getStyle_id());
+        }else if(mType == SeriesFragment.TYPE_SPACE){
+            category.setStyle_id(mCategory.getStyle_id());
+        }else if(mType == SeriesFragment.TYPE_CATEGORY){
+            category.setBrand_id(mCategory.getStyle_id());
+        }
+        category.setPage(mCurPage+"");
 
         RetrofitClient.getInstance().createBaseApi()
                 .json(NetConfig.GET_GOODS_LIST,category.genRequestBody())

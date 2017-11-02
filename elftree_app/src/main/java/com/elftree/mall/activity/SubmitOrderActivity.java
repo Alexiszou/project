@@ -240,6 +240,9 @@ public class SubmitOrderActivity extends BaseActivity {
         }
         order.setPay_method("1");
 
+        //String imageStr = CommonUtil.getImageStr("/storage/emulated/0/temp/generate1509610719979.jpg");
+        //order.setImage(imageStr);
+
         //String mUrl = NetConfig.ORDER_BUY;
         RetrofitClient.getInstance().createBaseApi()
                 .json(mUrl,order.genRequestBody())

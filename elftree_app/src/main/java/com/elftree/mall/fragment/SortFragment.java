@@ -70,7 +70,7 @@ public class SortFragment extends BaseFragment {
     @Override
     public void initDatas() {
         Bundle bundle = new Bundle();
-        bundle.putString(SeriesFragment.KEY_URL,NetConfig.GET_SERIES_LIST);
+        bundle.putInt(SeriesFragment.KEY_TYPE,SeriesFragment.TYPE_SERIES);
         mSeriesFragment = SeriesFragment.newInstance(bundle);
         mCurFragment = mSeriesFragment;
 
@@ -92,7 +92,7 @@ public class SortFragment extends BaseFragment {
                     case R.id.rbtn_series:
                         if(mSeriesFragment == null){
                             Bundle bundle = new Bundle();
-                            bundle.putString(SeriesFragment.KEY_URL,NetConfig.GET_SERIES_LIST);
+                            bundle.putInt(SeriesFragment.KEY_TYPE,SeriesFragment.TYPE_SERIES);
                             mSeriesFragment = SeriesFragment.newInstance(bundle);
                         }
                         mCurFragment = mSeriesFragment;
@@ -100,7 +100,7 @@ public class SortFragment extends BaseFragment {
                     case R.id.rbtn_space:
                         if(mSpaceFragment == null){
                             Bundle bundle = new Bundle();
-                            bundle.putString(SeriesFragment.KEY_URL,NetConfig.GET_SPACE_LIST);
+                            bundle.putInt(SeriesFragment.KEY_TYPE,SeriesFragment.TYPE_SPACE);
                             mSpaceFragment = SeriesFragment.newInstance(bundle);
                         }
                         mCurFragment = mSpaceFragment;
@@ -108,7 +108,7 @@ public class SortFragment extends BaseFragment {
                     case R.id.rbtn_category:
                         if(mCategoryFragment == null){
                             Bundle bundle = new Bundle();
-                            bundle.putString(SeriesFragment.KEY_URL,NetConfig.GET_CATEGORY_LIST);
+                            bundle.putInt(SeriesFragment.KEY_TYPE,SeriesFragment.TYPE_CATEGORY);
                             mCategoryFragment = SeriesFragment.newInstance(bundle);
                         }
                         mCurFragment = mCategoryFragment;

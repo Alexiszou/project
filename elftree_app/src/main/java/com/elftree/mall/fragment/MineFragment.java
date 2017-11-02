@@ -14,11 +14,13 @@ import com.elftree.mall.activity.LoginActivity;
 import com.elftree.mall.activity.MyApplication;
 import com.elftree.mall.activity.MyCouponActivity;
 import com.elftree.mall.activity.MyOrderActivity;
+import com.elftree.mall.activity.TakePhotoExample;
 import com.elftree.mall.databinding.FragmentMineBinding;
 import com.elftree.mall.databinding.FragmentSortBinding;
 import com.elftree.mall.model.CommonModel;
 import com.elftree.mall.model.User;
 import com.elftree.mall.utils.CommonUtil;
+
 
 /**
  * Created by zouhongzhi on 2017/9/22.
@@ -129,6 +131,7 @@ public class MineFragment extends BaseFragment {
                 CommonUtil.startActivity(mContext, AboutElftreeActivity.class);
                 break;
             case R.id.setting:
+                CommonUtil.startActivity(mContext, TakePhotoExample.class);
                 break;
         }
     }

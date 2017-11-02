@@ -15,19 +15,22 @@ import okhttp3.RequestBody;
 public class Category extends CommonModel {
 
     @Expose
-    private String cat_id = "0";
+    private String cat_id ;
+
+    @Expose private String style_id;
+    @Expose private String brand_id;
 
     @Expose private String cat_name;
     @Expose private String icon;
 
-    @Expose private int page = 1;
+    @Expose private String page = "1";
 
     public void genSign(){
-        String str = (!TextUtils.isEmpty(cat_id)?"cat_id=" + cat_id :"")
-                +"&page="+page;
-                /*+(!TextUtils.isEmpty(nickname)?"&nickname=" + nickname :"")
-                +(!TextUtils.isEmpty(username)?"&password="+password:"")
-                +(!TextUtils.isEmpty(password)?"&username="+username:"");*/
+        String str = (!TextUtils.isEmpty(brand_id)?"brand_id=" + brand_id :"")
+                +(!TextUtils.isEmpty(cat_id)?"cat_id=" + cat_id :"")
+                +(!TextUtils.isEmpty(page)?"&page=" + page :"")
+                +(!TextUtils.isEmpty(style_id)?"&style_id=" + style_id :"");
+
         Logger.d("& index:"+str.indexOf("&"));
         if(str.startsWith("&")){
             str = str.replaceFirst("&","");
@@ -66,11 +69,27 @@ public class Category extends CommonModel {
         this.icon = icon;
     }
 
-    public int getPage() {
+    public String getStyle_id() {
+        return style_id;
+    }
+
+    public void setStyle_id(String style_id) {
+        this.style_id = style_id;
+    }
+
+    public String getBrand_id() {
+        return brand_id;
+    }
+
+    public void setBrand_id(String brand_id) {
+        this.brand_id = brand_id;
+    }
+
+    public String getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(String page) {
         this.page = page;
     }
 }

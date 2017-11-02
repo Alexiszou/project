@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="title"
+            type="String"/>
+        <variable
+            name="clickEvent"
+            type="android.view.View.OnClickListener"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/header"
+            layout="@layout/layout_activity_header"
+            app:title="@{title}"/>
+        <Button
+            android:id="@+id/btn_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择照片"
+            android:onClick="@{clickEvent}"/>
+
+        <Button
+            android:id="@+id/btn_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择相机"
+            android:onClick="@{clickEvent}"/>
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+    </LinearLayout>
+</layout>
